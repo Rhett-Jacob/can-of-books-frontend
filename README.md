@@ -19,15 +19,15 @@ Jacob Bassett & Rhett Beardemphl
 - Make a list of each parson’s strengths.
 
 Rhetts strengths are being a team player and understanding react and express fundamentals.
-Jacobs strengths are
+Jacobs strengths are css and express!
 
 - How can you best utilize these strengths in the development of your application?
 
-We can utilize these strengths by making sure eachothers work is accounted for and up to date
+We can utilize these strengths by making sure eachothers work is accounted for and up to date.
 
 - In what areas do you each want to develop greater strength?
 
-Throughout this exercise Rhett wants to develop a better understanding of MongoDB and Mongoose.
+Throughout this exercise Rhett & Jake wants to develop a better understanding of MongoDB, Mongoose and a new css feature.
 
 - Knowing that every person in your team needs to understand the code, how do you plan to approach the day-to-day development?
 
@@ -37,6 +37,8 @@ We plan to approach the days by getting together and discussing what we should w
 
 - What will your team do if one person is pulling all the weight while the other person is not contributing?
 
-- What will your team do if one person is taking over the project and not letting the other member contribute?
+"It doesn't matter who writes the code, everyone has the right to understand it."
 
 - How will you approach each other and the challenge of building an application knowing that it is impossible for two people to be at the exact same place in understanding and skill level?
+
+"Sucking at something is the first step at kind of being good at something."
