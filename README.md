@@ -8,6 +8,31 @@ Books are life-changing. They have the power to enlighten, educate, entertain, h
 
 Jacob Bassett & Rhett Beardemphl
 
+## Change Log
+
+* 05/22/23 7:00pm - Made GET request to DB and rendered all data in a carousel.
+* 05/22/23 7:30pm - Browser Router to toggle between home and about pages.
+
+## Estimates
+
+Name of feature: request books & display
+Estimate of time needed to complete: 1hr
+Start time: 7:00p
+Finish time: 7:30p
+Actual time needed to complete: 30min
+
+Name of feature: Navbar and about page
+Estimate of time needed to complete: 45 min
+Start time: 7:30p
+Finish time: 8:10p
+Actual time needed to complete: 40min
+
+Name of feature: 
+Estimate of time needed to complete: 
+Start time: 
+Finish time: 
+Actual time needed to complete: 
+
 #### Logistical
 
 - We will be able to communicate from 10a - 9p on slack.
