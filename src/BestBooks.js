@@ -4,6 +4,7 @@ import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+import Spinner from "react-bootstrap/Spinner";
 
 let SERVER = process.env.REACT_APP_SERVER;
 
@@ -15,6 +16,7 @@ class BestBooks extends React.Component {
       books: [],
       showError: false,
       errorMessage: "",
+      showSpinner: false,
     };
   }
 
@@ -62,8 +64,8 @@ class BestBooks extends React.Component {
   handlerDeleteBook = (_id) => {
     let url = `${SERVER}/books/${_id}`
     axios.delete(url)
-      .then(res => this.setState({books:this.state.books.filter(book => book._id!==_id)}))
-      .catch((err) => {this.setState({showError: true, errorMessage: err.message})});
+      .then(res => this.setState({books:this.state.books.filter(book => book._id!==_id), showSpinner:false}))
+      .catch((err) => {this.setState({showError: true, errorMessage: err.message, showSpinner:false})});
   }
 
   render() {
@@ -83,7 +85,9 @@ class BestBooks extends React.Component {
             <h3>{`${book.title}`}</h3>
             <p>{`${book.description}`}</p>
             <p>{`${book.status}`}</p>
-            <Button variant='primary' onClick={()=>this.handlerDeleteBook(book._id)}>Delete Book</Button>
+            {this.state.showSpinner?
+              <Spinner animation="border" variant="primary" />:
+              <Button variant='primary' onClick={()=>{this.handlerDeleteBook(book._id);this.setState({showSpinner:true})}}>Delete Book</Button>}
           </Carousel.Caption>
         </Carousel.Item>
       );
