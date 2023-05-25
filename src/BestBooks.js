@@ -23,7 +23,7 @@ class BestBooks extends React.Component {
     axios
       .get(`${SERVER}/books`)
       .then((res) => this.setState({ books: res.data.data }))
-      .catch((err) => console.log(err));
+      .catch((err) => {console.error(err); this.setState({showError: true, errorMessage: err.message})});
   }
 
   handlerAddBook = (e) => {
@@ -48,8 +48,8 @@ class BestBooks extends React.Component {
         .then((res) =>
           this.setState({ books: [...this.state.books, res.data] })
         )
-        .catch((err) => console.log(err));
-    } else {
+        .catch((err) => {console.error(err.message); this.setState({showError: true, errorMessage: err.message})});
+      } else {
       this.setState({
         showError: true,
         errorMessage:
@@ -59,8 +59,12 @@ class BestBooks extends React.Component {
     }
   };
 
+  // handlerDeleteBook = () => {
+
+  // }
+
   render() {
-    // console.log(this.state);
+    console.log(this.state.books);
 
     /* TODO: render all the books in a Carousel */
     let CarouselItems = this.state.books.map((book, idx) => {
@@ -76,6 +80,7 @@ class BestBooks extends React.Component {
             <h3>{`${book.title}`}</h3>
             <p>{`${book.description}`}</p>
             <p>{`${book.status}`}</p>
+            {/* <Button variant='primary' onClick={()=>handlerDeleteBook(book._id)}>Delete Book</Button> */}
           </Carousel.Caption>
         </Carousel.Item>
       );

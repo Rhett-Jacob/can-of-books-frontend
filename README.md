@@ -12,6 +12,7 @@ Jacob Bassett & Rhett Beardemphl
 
 * 05/22/23 7:00pm - Made GET request to DB and rendered all data in a carousel.
 * 05/22/23 7:30pm - Browser Router to toggle between home and about pages.
+* 05/22/23 4:00pm - Added postHandler and Error Modal.
 
 ## Estimates
 
@@ -26,6 +27,12 @@ Estimate of time needed to complete: 45 min
 Start time: 7:30p
 Finish time: 8:10p
 Actual time needed to complete: 40min
+
+Name of feature: Post handler/Error modal
+Estimate of time needed to complete: 55min
+Start time: 2:00p
+Finish time: 3:40p
+Actual time needed to complete: 100min
 
 Name of feature: 
 Estimate of time needed to complete: 
