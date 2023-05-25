@@ -17,6 +17,7 @@ class BestBooks extends React.Component {
       showError: false,
       errorMessage: "",
       showSpinner: false,
+      carouselIndex:0,
     };
   }
 
@@ -68,10 +69,14 @@ class BestBooks extends React.Component {
       .catch((err) => {this.setState({showError: true, errorMessage: err.message, showSpinner:false})});
   }
 
-  render() {
-    console.log(this.state.books);
+  handlerCarouselIndex = (selectedIndex) => {
+      // console.log(selectedIndex);
+      this.setState({carouselIndex:selectedIndex});
+  }
 
-    /* TODO: render all the books in a Carousel */
+  render() {
+    // console.log(this.state.carouselIndex);
+
     let CarouselItems = this.state.books.map((book, idx) => {
       return (
         <Carousel.Item key={idx}>
@@ -87,7 +92,7 @@ class BestBooks extends React.Component {
             <p>{`${book.status}`}</p>
             {this.state.showSpinner?
               <Spinner animation="border" variant="primary" />:
-              <Button variant='primary' onClick={()=>{this.handlerDeleteBook(book._id);this.setState({showSpinner:true})}}>Delete Book</Button>}
+              <Button variant='primary' onClick={()=>{this.handlerDeleteBook(book._id);this.setState({showSpinner:true,carouselIndex:0})}}>Delete Book</Button>}
           </Carousel.Caption>
         </Carousel.Item>
       );
@@ -173,9 +178,9 @@ class BestBooks extends React.Component {
         </Modal>
 
         {this.state.books.length > 0 ? (
-          <Carousel>{CarouselItems}</Carousel>
+          <Carousel interval={null} activeIndex={this.state.carouselIndex} onSelect={this.handlerCarouselIndex}>{CarouselItems}</Carousel>
         ) : (
-          <Carousel>
+          <Carousel activeIndex={0}>
             <Carousel.Item>
               <img
                 className="d-block w-100"
