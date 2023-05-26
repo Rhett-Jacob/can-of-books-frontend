@@ -2,9 +2,11 @@ import React from "react";
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Spinner from "react-bootstrap/Spinner";
+import HeaderButton from "./HeaderButton/HeaderButton";
+import AddBookModal from "./AddBookModal/AddBookModal";
+import './BestBooks.css';
 
 let SERVER = process.env.REACT_APP_SERVER;
 
@@ -21,7 +23,6 @@ class BestBooks extends React.Component {
     };
   }
 
-  /* TODO: Make a GET request to your API to fetch all the books from the database  */
   componentDidMount() {
     axios
       .get(`${SERVER}/books`)
@@ -100,59 +101,13 @@ class BestBooks extends React.Component {
 
     return (
       <>
-        <div>
-          <h2>Bookshelf</h2>
-          <Button
-            variant="primary"
-            onClick={() => this.setState({ showAddBook: true })}
-          >
-            Add Book
-          </Button>
-        </div>
+        <HeaderButton handlerShowAddBook={() => this.setState({ showAddBook: true })}/>
 
-        <Modal
-          show={this.state.showAddBook}
-          onHide={() => this.setState({ showAddBook: false })}
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Add Your Favorite Book</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={this.handlerAddBook}>
-              <Form.Group className="mb-3" controlId="bookTitle">
-                <Form.Label>Book Title:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="The Farmer Goes West"
-                  autoFocus
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="bookDescription">
-                <Form.Label>Book Description:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="The farmer runs out of soil for a third time."
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="bookStatus">
-                <Form.Label>Is Available:</Form.Label>
-                <Form.Control type="text" placeholder="True" />
-              </Form.Group>
-              <Button
-                variant="secondary"
-                onClick={() => this.setState({ showAddBook: false })}
-              >
-                Close Form
-              </Button>
-              <Button variant="primary" type="submit">
-                Save Book
-              </Button>
-            </Form>
-          </Modal.Body>
-          {/* <Modal.Footer>
-          </Modal.Footer> */}
-        </Modal>
+        <AddBookModal 
+          showAddBook={this.state.showAddBook} 
+          handlerShowAddBook={() => this.setState({ showAddBook: false })}
+          handlerAddBook={this.handlerAddBook}
+        />
 
         <Modal
           show={this.state.showError}
