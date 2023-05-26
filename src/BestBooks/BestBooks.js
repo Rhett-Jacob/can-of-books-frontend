@@ -1,12 +1,10 @@
 import React from "react";
 import axios from "axios";
-import Carousel from "react-bootstrap/Carousel";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Spinner from "react-bootstrap/Spinner";
 import HeaderButton from "./HeaderButton/HeaderButton";
 import AddBookModal from "./AddBookModal/AddBookModal";
-import './BestBooks.css';
+import ErrorModal from "./ErrorModal/ErrorModal.js";
+import CarouselBooks from "./CarouselBooks/CarouselBooks";
+import "./BestBooks.css";
 
 let SERVER = process.env.REACT_APP_SERVER;
 
@@ -16,10 +14,10 @@ class BestBooks extends React.Component {
     this.state = {
       showAddBook: false,
       books: [],
+      noBooks: true,
       showError: false,
       errorMessage: "",
       showSpinner: false,
-      carouselIndex:0,
     };
   }
 
@@ -27,7 +25,19 @@ class BestBooks extends React.Component {
     axios
       .get(`${SERVER}/books`)
       .then((res) => this.setState({ books: res.data.data }))
-      .catch((err) => {console.error(err); this.setState({showError: true, errorMessage: err.message})});
+      .then((item) =>
+        this.state.books.length > 0
+          ? this.setState({ noBooks: false })
+          : this.setState({ noBooks: true })
+      )
+      .catch((err) => {
+        console.error(err);
+        this.setState({
+          showError: true,
+          errorMessage: err.message,
+          noBooks: true,
+        });
+      });
   }
 
   handlerAddBook = (e) => {
@@ -50,10 +60,16 @@ class BestBooks extends React.Component {
       axios
         .post(url, newBook)
         .then((res) =>
-          this.setState({ books: [...this.state.books, res.data] })
+          this.setState({
+            books: [...this.state.books, res.data],
+            noBooks: false,
+          })
         )
-        .catch((err) => {console.error(err.message); this.setState({showError: true, errorMessage: err.message})});
-      } else {
+        .catch((err) => {
+          console.error(err.message);
+          this.setState({ showError: true, errorMessage: err.message });
+        });
+    } else {
       this.setState({
         showError: true,
         errorMessage:
@@ -64,90 +80,63 @@ class BestBooks extends React.Component {
   };
 
   handlerDeleteBook = (_id) => {
-    let url = `${SERVER}/books/${_id}`
-    axios.delete(url)
-      .then(res => this.setState({books:this.state.books.filter(book => book._id!==_id), showSpinner:false}))
-      .catch((err) => {this.setState({showError: true, errorMessage: err.message, showSpinner:false})});
-  }
-
-  handlerCarouselIndex = (selectedIndex) => {
-      // console.log(selectedIndex);
-      this.setState({carouselIndex:selectedIndex});
-  }
+    this.setState({ showSpinner: true });
+    let url = `${SERVER}/books/${_id}`;
+    axios
+      .delete(url)
+      .then((res) =>
+        this.setState((prevState) => ({
+          ...prevState,
+          books: this.state.books.filter((book) => book._id !== _id),
+          noBooks: prevState.books.length === 1 ? true : false,
+          showSpinner: false,
+        }))
+      )
+      .catch((err) => {
+        this.setState({
+          showError: true,
+          errorMessage: err.message,
+          showSpinner: false,
+        });
+      });
+  };
 
   render() {
-    // console.log(this.state.carouselIndex);
-
-    let CarouselItems = this.state.books.map((book, idx) => {
-      return (
-        <Carousel.Item key={idx}>
-          <img
-            className="d-block w-100"
-            style={{ height: "500px" }}
-            src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"
-            alt={`${book.title}`}
-          />
-          <Carousel.Caption>
-            <h3>{`${book.title}`}</h3>
-            <p>{`${book.description}`}</p>
-            <p>{`${book.status}`}</p>
-            {this.state.showSpinner?
-              <Spinner animation="border" variant="primary" />:
-              <Button variant='primary' onClick={()=>{this.handlerDeleteBook(book._id);this.setState({showSpinner:true,carouselIndex:0})}}>Delete Book</Button>}
-          </Carousel.Caption>
-        </Carousel.Item>
-      );
-    });
-
+    console.log(this.state.noBooks, this.state.books);
     return (
       <>
-        <HeaderButton handlerShowAddBook={() => this.setState({ showAddBook: true })}/>
+        <HeaderButton
+          handlerShowAddBook={() => this.setState({ showAddBook: true })}
+        />
 
-        <AddBookModal 
-          showAddBook={this.state.showAddBook} 
+        <AddBookModal
+          showAddBook={this.state.showAddBook}
           handlerShowAddBook={() => this.setState({ showAddBook: false })}
           handlerAddBook={this.handlerAddBook}
         />
 
-        <Modal
-          show={this.state.showError}
-          onHide={() => this.setState({ showError: false, errorMessage: "" })}
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Error!</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>{this.state.errorMessage}</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="secondary"
-              onClick={() =>
-                this.setState({ showError: false, errorMessage: "" })
-              }
-            >
-              Dismiss Error
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <ErrorModal
+          showError={this.state.showError}
+          errorMessage={this.state.errorMessage}
+          handlerClearError={() =>
+            this.setState({ showError: false, errorMessage: "" })
+          }
+        />
 
-        {this.state.books.length > 0 ? (
-          <Carousel interval={null} activeIndex={this.state.carouselIndex} onSelect={this.handlerCarouselIndex}>{CarouselItems}</Carousel>
+        {this.state.noBooks ? (
+          <CarouselBooks
+            noBooks={this.state.noBooks}
+            showSpinner={this.state.showSpinner}
+            books={[{ title: "No Books in Collection" }]}
+            handlerDeleteBook={this.handlerDeleteBook}
+          />
         ) : (
-          <Carousel activeIndex={0}>
-            <Carousel.Item>
-              <img
-                className="d-block w-100"
-                style={{ height: "500px" }}
-                src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"
-                alt={"no books in book collection"}
-              />
-              <Carousel.Caption>
-                <h3>No Books in Book Collection</h3>
-              </Carousel.Caption>
-            </Carousel.Item>
-          </Carousel>
+          <CarouselBooks
+            noBooks={this.state.noBooks}
+            showSpinner={this.state.showSpinner}
+            books={this.state.books}
+            handlerDeleteBook={this.handlerDeleteBook}
+          />
         )}
       </>
     );
