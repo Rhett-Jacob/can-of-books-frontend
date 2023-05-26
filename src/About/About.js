@@ -1,7 +1,7 @@
 import { Component } from "react";
 import Carousel from "react-bootstrap/Carousel";
-import rhettImage from './images/rhett-beardemphl.jpg'
-import jacobImage from './images/jacob-bassett.jpg'
+import rhettImage from '../images/rhett-beardemphl.jpg';
+import jacobImage from '../images/jacob-bassett.jpg'
 
 class Profile extends Component {
   render() {
