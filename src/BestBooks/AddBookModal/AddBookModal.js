@@ -36,15 +36,21 @@ class AddBookModal extends React.Component {
                             <Form.Label>Is Available:</Form.Label>
                             <Form.Control type="text" placeholder="True" />
                         </Form.Group>
-                        <Button
-                            variant="secondary"
-                            onClick={this.props.handlerShowAddBook}
-                        >
-                            Close Form
-                        </Button>
-                        <Button variant="primary" type="submit">
-                            Save Book
-                        </Button>
+                        <div className="buttonModalContainer">
+                            <Button 
+                                className="buttonAdd buttonModal"
+                                variant="primary" 
+                                type="submit">
+                                Save Book
+                            </Button>
+                            <Button
+                                className="buttonDelete buttonModal"
+                                variant="secondary"
+                                onClick={this.props.handlerShowAddBook}
+                            >
+                                Close Form
+                            </Button>
+                        </div>
                     </Form>
                 </Modal.Body>
             </Modal>

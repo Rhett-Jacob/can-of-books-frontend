@@ -1,0 +1,29 @@
+
+/* .carouselContainer {
+  background-color:var(--sunset);
+  width:100vw;
+} */
+
+.carouselParent {
+    border:10px solid var(--sunset);
+    display:flex;
+    flex-direction:column;
+    flex-wrap:nowrap;
+    justify-content:center;
+}
+
+.carouselImage {
+  object-fit:cover;
+}
+
+.carouselCaption {
+  background-color:rgba(244, 241, 222,0.8);
+  /* outline:2px solid red; */
+  color:var(--delft-blue) !important;
+  border-radius:0.5em;
+  font-size:2em;
+}
+
+.carouselCaptionHeader {
+  font-weight:bold;
+}

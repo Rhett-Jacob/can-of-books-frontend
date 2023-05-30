@@ -1,0 +1,12 @@
+.header {
+    background-color:var(--delft-blue);
+}
+
+.nav-link {
+    color: var(--eggshell)!important;
+    font-size: 1.5rem!important;
+}
+
+.nav-link:hover{
+    color: rgb(102, 98, 98)!important; 
+}

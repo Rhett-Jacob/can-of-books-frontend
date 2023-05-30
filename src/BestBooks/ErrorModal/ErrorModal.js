@@ -18,6 +18,7 @@ export default class ErrorModal extends React.Component {
           </Modal.Body>
           <Modal.Footer>
             <Button
+              className="buttonDelete buttonModal"
               variant="secondary"
               onClick={this.props.handlerClearError}
             >

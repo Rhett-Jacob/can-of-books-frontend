@@ -1,0 +1,75 @@
+:root {
+    --eggshell: #f4f1deff;
+    --burnt-sienna: #e07a5fff;
+    --delft-blue: #3d405bff;
+    --cambridge-blue: #81b29aff;
+    --sunset: #f2cc8fff;
+}
+
+.app {
+    background-color:var(--delft-blue);
+}
+
+.buttonAdd {
+  /* outline:2px solid red; */
+  background-color:var(--cambridge-blue);
+  border: 2px solid var(--cambridge-blue);
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+}
+
+.buttonAdd:hover {
+    background-color: rgb(94, 118, 106);
+    padding: 1.1rem 2.1rem;
+    margin: -0.1rem 0;
+    border: 2px solid var(--cambridge-blue)
+}
+
+
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.buttonDelete {
+  background-color:var(--burnt-sienna);
+  border: 2px solid var(--burnt-sienna);
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+}
+
+.buttonDelete:hover {
+  background-color: rgb(227, 105, 71);
+  padding: 1.1rem 2.1rem;
+  margin: -0.1rem 0;
+  border: 2px solid var(--burnt-sienna);
+}
+
+.buttonModalContainer {
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  justify-content:space-between;
+}
+
+.buttonModal {
+    /* padding: -1rem; */
+}
+
+.footer {
+    background-color:var(--delft-blue);
+    display: flex;
+    justify-content: end;
+}
+
+span.footerText.navbar-brand{
+    color: var(--eggshell)!important;
+    font-size: 0.85rem;
+    margin-right: 2rem;
+}
+
+/* .carousel-inner img {
+  margin: auto;
+} */
