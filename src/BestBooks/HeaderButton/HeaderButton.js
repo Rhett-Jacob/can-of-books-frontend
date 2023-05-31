@@ -5,9 +5,9 @@ import './HeaderButton.css';
 class HeaderButton extends React.Component {
     render() {
         return (
-            <div>
-                <h2>Bookshelf</h2>
+            <div className='welcome'>
                 <Button
+                    className="buttonAdd"
                     variant="primary"
                     onClick={this.props.handlerShowAddBook}
                 >
