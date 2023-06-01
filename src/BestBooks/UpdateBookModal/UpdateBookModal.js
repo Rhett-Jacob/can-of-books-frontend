@@ -1,27 +1,27 @@
 import React from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
-import './AddBookModal.css';
+import './UpdateBookModal.css';
 
-class AddBookModal extends React.Component {
+class UpdateBookModal extends React.Component {
     render() {
         return (
             <Modal
-                show={this.props.showAddBook}
-                onHide={this.props.handlerShowAddBook}
+                show={this.props.showUpdateBook}
+                onHide={this.props.handlerShowUpdateBook}
                 centered
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Add Your Favorite Book</Modal.Title>
+                    <Modal.Title>Update Your Favorite Book</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={this.props.handlerAddBook}>
+                    <Form onSubmit={this.props.handlerUpdateBook}>
                         <Form.Group className="mb-3" controlId="bookTitle">
                             <Form.Label>Book Title:</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder={this.props.addBook.title}
+                                defaultValue={this.props.updateBook.title}
                                 autoFocus
                             />
                         </Form.Group>
@@ -29,24 +29,28 @@ class AddBookModal extends React.Component {
                             <Form.Label>Book Description:</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder={this.props.addBook.description}
+                                defaultValue={this.props.updateBook.description}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="bookStatus">
                             <Form.Label>Is Available:</Form.Label>
-                            <Form.Control type="text" placeholder={this.props.addBook.status} />
+                            <Form.Control 
+                              type="text" 
+                              defaultValue={this.props.updateBook.status} />
                         </Form.Group>
                         <div className="buttonModalContainer">
                             <Button 
                                 className="buttonAdd buttonModal"
                                 variant="primary" 
-                                type="submit">
-                                Save Book
+                                type="submit"
+                                onClick={this.props.handlerUpdateBook} 
+                            >
+                                Update Book
                             </Button>
                             <Button
                                 className="buttonDelete buttonModal"
                                 variant="secondary"
-                                onClick={this.props.handlerAddBook}
+                                onClick={this.props.handlerUpdateBook}
                             >
                                 Close Form
                             </Button>
@@ -58,4 +62,5 @@ class AddBookModal extends React.Component {
     }
 }
 
-export default AddBookModal;
+export default UpdateBookModal;
+

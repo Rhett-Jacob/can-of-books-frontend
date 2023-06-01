@@ -49,16 +49,26 @@ export default class CarouselBooks extends React.Component {
           )}
 
           {!this.props.showSpinner && !this.props.noBooks && (
-            <Button
-              className="buttonDelete"
-              variant="primary"
-              onClick={() => {
-                this.props.handlerDeleteBook(book._id);
-                this.setState({ carouselIndex: 0 });
-              }}
-            >
-              Delete Book
-            </Button>
+            <>
+              <Button
+                className="buttonDelete"
+                variant="secondary"
+                onClick={() => {
+                  this.props.handlerShowUpdateModal(true, book);
+                }}>
+                Update Book
+              </Button>
+              <Button
+                className="buttonDelete"
+                variant="primary"
+                onClick={() => {
+                  this.props.handlerDeleteBook(book._id);
+                  this.setState({ carouselIndex: 0 });
+                }}
+              >
+                Delete Book
+              </Button>
+            </>
           )}
         </Carousel.Caption>
       </Carousel.Item>

@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import rhettImage from '../images/rhett-beardemphl.jpg';
 import jacobImage from '../images/jacob-bassett.jpg'
@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-class Profile extends Component {
+class Profile extends React.Component {
   render() {
     return (
     <Container className="carouselContainer">
@@ -28,7 +28,7 @@ class Profile extends Component {
               <Carousel.Caption
                 className="carouselCaption">
                 <h3 className="textAboutUs">Rhett Beardemphl</h3>
-                <p className="textAboutUs"></p>
+                <p className="textAboutUs">Rhett was a LA creative who found a new home for his creativity in web and app development.</p>
               </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
