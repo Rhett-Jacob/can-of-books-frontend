@@ -66,10 +66,11 @@ class BestBooks extends React.Component {
       axios
         .post(url, newBook)
         .then((res) =>
-          this.setState({
-            books: [...this.state.books, res.data],
+          this.setState(prevState => ({
+            ...prevState,
+            books: [...prevState.books, res.data],
             noBooks: false,
-          })
+          }))
         )
         .catch((err) => {
           // console.error(err.message);
@@ -99,19 +100,21 @@ class BestBooks extends React.Component {
         description: bookDescription,
         status: bookStatus,
       };
-      // console.log(updateBook);
+  
       let url = `${SERVER}/books/${id}`;
-
+      console.log(url,updateBook);
       this.setState({ showUpdateBook: false });
 
       axios
         .put(url, updateBook)
         .then((res) => {
-          this.setState({ 
-            books: this.state.books.map(book=>book._id===id?res.data:book),
+          let updatedBook = res.data;
+          this.setState(prevState => ({
+            ...prevState,
+            books: prevState.books.map(book=>book._id===id?updatedBook:book),
             noBooks: false,
-          });
-          console.log(res.data);
+          }));
+          console.log(res);
         }
         )
         .catch((err) => {
@@ -136,7 +139,7 @@ class BestBooks extends React.Component {
       .then((res) =>
         this.setState((prevState) => ({
           ...prevState,
-          books: this.state.books.filter((book) => book._id !== _id),
+          books: prevState.books.filter((book) => book._id !== _id),
           noBooks: prevState.books.length === 1 ? true : false,
           showSpinner: false,
         }))
