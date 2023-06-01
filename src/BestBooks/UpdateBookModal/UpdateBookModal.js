@@ -9,14 +9,14 @@ class UpdateBookModal extends React.Component {
         return (
             <Modal
                 show={this.props.showUpdateBook}
-                onHide={this.props.handlerShowUpdateBook}
+                onHide={()=>this.props.handlerShowUpdateBook(false,{})}
                 centered
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Update Your Favorite Book</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={this.props.handlerUpdateBook}>
+                    <Form onSubmit={(event)=>this.props.handlerUpdateBook(event,this.props.updateBook._id)}>
                         <Form.Group className="mb-3" controlId="bookTitle">
                             <Form.Label>Book Title:</Form.Label>
                             <Form.Control
@@ -43,14 +43,13 @@ class UpdateBookModal extends React.Component {
                                 className="buttonAdd buttonModal"
                                 variant="primary" 
                                 type="submit"
-                                onClick={this.props.handlerUpdateBook} 
                             >
                                 Update Book
                             </Button>
                             <Button
                                 className="buttonDelete buttonModal"
                                 variant="secondary"
-                                onClick={this.props.handlerUpdateBook}
+                                onClick={()=>this.props.handlerShowUpdateBook(false,{})}
                             >
                                 Close Form
                             </Button>

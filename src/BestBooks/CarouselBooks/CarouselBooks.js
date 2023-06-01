@@ -54,7 +54,7 @@ export default class CarouselBooks extends React.Component {
                 className="buttonDelete"
                 variant="secondary"
                 onClick={() => {
-                  this.props.handlerShowUpdateModal(true, book);
+                  this.props.handlerShowUpdateBook(true, book);
                 }}>
                 Update Book
               </Button>

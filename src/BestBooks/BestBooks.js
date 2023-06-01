@@ -17,7 +17,7 @@ class BestBooks extends React.Component {
     super(props);
     this.state = {
       showAddBook: false,
-      showUpdateBook: true,
+      showUpdateBook: false,
       showError: false,
       showSpinner: false,
       noBooks: true,
@@ -37,7 +37,7 @@ class BestBooks extends React.Component {
           : this.setState({ noBooks: true })
       )
       .catch((err) => {
-        console.error(err);
+        // console.error(err);
         this.setState({
           showError: true,
           errorMessage: err.message,
@@ -72,7 +72,7 @@ class BestBooks extends React.Component {
           })
         )
         .catch((err) => {
-          console.error(err.message);
+          // console.error(err.message);
           this.setState({ showError: true, errorMessage: err.message });
         });
     } else {
@@ -81,6 +81,49 @@ class BestBooks extends React.Component {
         errorMessage:
           "All fields must be filled out. Please carefully fill out the form.",
         showAddBook: false,
+      });
+    }
+  };
+
+  handlerUpdateBook = (e, id) => {
+    e.preventDefault();
+    // console.log(e.target);
+    let bookTitle = e.target.bookTitle.value;
+    let bookDescription = e.target.bookDescription.value;
+    let bookStatus = e.target.bookStatus.value;
+
+    if (bookTitle && bookDescription && bookStatus) {
+      let updateBook = {
+        _id:id,
+        title: bookTitle,
+        description: bookDescription,
+        status: bookStatus,
+      };
+      // console.log(updateBook);
+      let url = `${SERVER}/books/${id}`;
+
+      this.setState({ showUpdateBook: false });
+
+      axios
+        .put(url, updateBook)
+        .then((res) => {
+          this.setState({ 
+            books: this.state.books.map(book=>book._id===id?res.data:book),
+            noBooks: false,
+          });
+          console.log(res.data);
+        }
+        )
+        .catch((err) => {
+          // console.error(err.message);
+          this.setState({ showError: true, errorMessage: err.message });
+        });
+    } else {
+      this.setState({
+        showError: true,
+        errorMessage:
+          "All fields must be filled out. Please carefully fill out the form.",
+        showUpdateBook: false,
       });
     }
   };
@@ -108,7 +151,7 @@ class BestBooks extends React.Component {
   };
 
   render() {
-    // console.log(this.state.noBooks, this.state.books);
+    // console.log(this.state.updateBook);
     return (
       <>
         <HeaderButton
@@ -125,7 +168,7 @@ class BestBooks extends React.Component {
         <UpdateBookModal
           updateBook={this.state.updateBook}
           showUpdateBook={this.state.showUpdateBook}
-          handlerShowUpdateBook={() => this.setState({ showUpdateBook: false })}
+          handlerShowUpdateBook={(bool,book)=>this.setState({showUpdateBook:bool,updateBook:book})}
           handlerUpdateBook={this.handlerUpdateBook}
         />
 
@@ -150,6 +193,7 @@ class BestBooks extends React.Component {
             showSpinner={this.state.showSpinner}
             books={this.state.books}
             handlerDeleteBook={this.handlerDeleteBook}
+            handlerShowUpdateBook={(bool,book)=>this.setState({showUpdateBook:bool,updateBook:book})}
           />
         )}
       </>
