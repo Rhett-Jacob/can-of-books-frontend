@@ -41,7 +41,7 @@ class Profile extends React.Component {
               <Carousel.Caption
                 className="carouselCaption">
                 <h3 className="textAboutUs">Jacob Bassett</h3>
-                <p className="textAboutUs">Jacob was a molecular biologist turned code slinger who like the taste of nucleotides with his glutamate.<a className="link" href="https://www.youtube.com/watch?v=GHX3aaLmjMI"> [link]</a></p>
+                <p className="textAboutUs">Jacob was a molecular biologist turned code slinger who likes the taste of nucleotides with his glutamate.<a className="link" href="https://www.youtube.com/watch?v=GHX3aaLmjMI"> [link]</a></p>
               </Carousel.Caption>
             </Carousel.Item>
           </Carousel>
