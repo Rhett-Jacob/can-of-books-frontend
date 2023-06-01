@@ -1,41 +1,50 @@
 import React from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
+import './UpdateBookModal.css';
 
 class UpdateBookModal extends React.Component {
     render() {
         return (
             <Modal
                 show={this.props.showUpdateBook}
-                onHide={this.props.handlerShowUpdateBook}
+                onHide={()=>this.props.handlerShowUpdateBook(false)}
                 centered
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Update Your Favorite Book</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={this.props.handlerUpdateBook}>
-                        <Form.Group className="mb-3" controlId="bookTitle">
+                    <Form 
+                        onSubmit={(event)=>this.props.handlerUpdateBook(event,this.props.updateBook._id)}>
+                        <Form.Group 
+                            className="mb-3" 
+                            controlId="bookTitle">
                             <Form.Label>Book Title:</Form.Label>
                             <Form.Control
                                 type="text"
-                                defaultValue="The Farmer Goes West"
-                                autoFocus
-                            />
+                                defaultValue={this.props.updateBook.title}
+                                autoFocus/>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="bookDescription">
+                        <Form.Group 
+                            className="mb-3" 
+                            controlId="bookDescription">
                             <Form.Label>Book Description:</Form.Label>
                             <Form.Control
                                 type="text"
-                                defaultValue="The farmer runs out of soil for a third time."
-                            />
+                                defaultValue={this.props.updateBook.description}/>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="bookStatus">
+                        <Form.Group 
+                            className="mb-3" 
+                            controlId="bookStatus">
                             <Form.Label>Is Available:</Form.Label>
-                            <Form.Control type="text" defaultValue="True" />
+                            <Form.Control 
+                              type="text" 
+                              defaultValue={this.props.updateBook.status}/>
                         </Form.Group>
-                        <div className="buttonModalContainer">
+                        <div 
+                            className="buttonModalContainer">
                             <Button 
                                 className="buttonAdd buttonModal"
                                 variant="primary" 
@@ -45,8 +54,7 @@ class UpdateBookModal extends React.Component {
                             <Button
                                 className="buttonDelete buttonModal"
                                 variant="secondary"
-                                onClick={this.props.handlerShowUpdateBook}
-                            >
+                                onClick={()=>this.props.handlerShowUpdateBook(false)}>
                                 Close Form
                             </Button>
                         </div>
@@ -58,3 +66,4 @@ class UpdateBookModal extends React.Component {
 }
 
 export default UpdateBookModal;
+

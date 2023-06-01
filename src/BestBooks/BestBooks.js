@@ -2,12 +2,15 @@ import React from "react";
 import axios from "axios";
 import HeaderButton from "./HeaderButton/HeaderButton";
 import AddBookModal from "./AddBookModal/AddBookModal";
+import UpdateBookModal from "./UpdateBookModal/UpdateBookModal";
 import ErrorModal from "./ErrorModal/ErrorModal.js";
 import CarouselBooks from "./CarouselBooks/CarouselBooks";
-import UpdateBookModal from "./UpdateBookModal/UpdateBookModal";
 import "./BestBooks.css";
 
 let SERVER = process.env.REACT_APP_SERVER;
+
+// cite description from wikipedia (https://en.wikipedia.org/wiki/Harry_Potter_and_the_Philosopher%27s_Stone_(film))
+const addBook = {title:"Harry Potter and the Sorcerer's Stone",description:"A boy who learns on his eleventh birthday that he is the orphaned son of two powerful wizards and possesses unique magical powers of his own. He is summoned from his life as an unwanted child to become a student at Hogwarts, an English boarding school for wizards. There, he meets several friends who become his closest allies and help him discover the truth about his parents' mysterious deaths.",status:"true"};
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -15,32 +18,44 @@ class BestBooks extends React.Component {
     this.state = {
       showAddBook: false,
       showUpdateBook: false,
-      books: [],
-      noBooks: true,
       showError: false,
-      errorMessage: "",
       showSpinner: false,
-      bookToUpdate: {}
+      noBooks: true,
+      books: [],
+      updateBook:{},
+      carouselIndex:0,
+      errorMessage: "",
     };
   }
 
   componentDidMount() {
     axios
       .get(`${SERVER}/books`)
-      .then((res) => this.setState({ books: res.data.data }))
+      .then((res) => {
+        const resBooks = res.data.data;
+        this.setState({ books: resBooks, updateBook:resBooks[0], carouselIndex:0})})
       .then((item) =>
         this.state.books.length > 0
           ? this.setState({ noBooks: false })
           : this.setState({ noBooks: true })
       )
       .catch((err) => {
-        console.error(err);
+        // console.error(err);
         this.setState({
           showError: true,
           errorMessage: err.message,
           noBooks: true,
         });
       });
+  }
+
+
+  handlerCarouselIndex = (idx) => {
+    this.setState(prevState => ({
+      ...prevState,
+      carouselIndex:idx,
+      updateBook: prevState.books[idx]
+    }))
   }
 
   handlerAddBook = (e) => {
@@ -62,14 +77,18 @@ class BestBooks extends React.Component {
 
       axios
         .post(url, newBook)
-        .then((res) =>
-          this.setState({
-            books: [...this.state.books, res.data],
+        .then((res) => {
+          let resBook = res.data;
+          this.setState(prevState => ({
+            ...prevState,
+            books: [...prevState.books, resBook],
+            carouselIndex: prevState.books.length,
+            updateBook:resBook,
             noBooks: false,
-          })
+          }))}
         )
         .catch((err) => {
-          console.error(err.message);
+          // console.error(err.message);
           this.setState({ showError: true, errorMessage: err.message });
         });
     } else {
@@ -82,45 +101,40 @@ class BestBooks extends React.Component {
     }
   };
 
-  handlerShowUpdateBook = (book) => {
-    this.setState({ showUpdateBook: true });
-    let updatingbook = this.state.books.find(bookInState => bookInState._id === book._id);
-    this.setState({
-      bookToUpdate: {
-        _id : updatingbook._id,
-        title: updatingbook.title,
-        description: updatingbook.description,
-        status: updatingbook.status
-      }
-    })
-  } 
-
-  handlerUpdateBook = (e) => {
+  handlerUpdateBook = (e, id) => {
     e.preventDefault();
-    let book_id = this.state.bookToUpdate._id;
-    let bookTitle = e.target.bookTitle.value || this.state.bookToUpdate.bookTitle;;
-    let bookDescription = e.target.bookDescription.value || this.state.bookToUpdate.bookDescription;;
-    let bookStatus = e.target.bookStatus.value || this.state.bookToUpdate.bookStatus;;
+    // console.log(e.target);
+    let bookTitle = e.target.bookTitle.value;
+    let bookDescription = e.target.bookDescription.value;
+    let bookStatus = e.target.bookStatus.value;
 
     if (bookTitle && bookDescription && bookStatus) {
-      let newBook = {
+      let updateBook = {
+        _id:id,
         title: bookTitle,
         description: bookDescription,
         status: bookStatus,
       };
-      let url = `${SERVER}/books/${book_id}`;
-      console.log(url,newBook);
+  
+      let url = `${SERVER}/books/${id}`;
+      // console.log(url,updateBook);
       this.setState({ showUpdateBook: false });
 
       axios
-        .put(url, newBook)
-        .then((res) =>
-          this.setState({
-            books: this.state.books.map(oldBook => oldBook._id === res.data._id ? newBook : oldBook)
-          })
+        .put(url, updateBook)
+        .then((res) => {
+          let updatedBook = res.data;
+          this.setState(prevState => ({
+            ...prevState,
+            books: prevState.books.map(book=>book._id===id?updatedBook:book),
+            noBooks: false,
+            updateBook:updatedBook
+          }));
+          // console.log(res);
+        }
         )
         .catch((err) => {
-          console.error(err.message);
+          // console.error(err.message);
           this.setState({ showError: true, errorMessage: err.message });
         });
     } else {
@@ -133,17 +147,19 @@ class BestBooks extends React.Component {
     }
   };
 
-  handlerDeleteBook = (_id) => {
+  handlerDeleteBook = (id) => {
     this.setState({ showSpinner: true });
-    let url = `${SERVER}/books/${_id}`;
+    let url = `${SERVER}/books/${id}`;
     axios
       .delete(url)
       .then((res) =>
         this.setState((prevState) => ({
           ...prevState,
-          books: this.state.books.filter((book) => book._id !== _id),
+          books: prevState.books.filter((book) => book._id !== id),
           noBooks: prevState.books.length === 1 ? true : false,
           showSpinner: false,
+          carouselIndex:0,
+          updateBook:prevState.books[0]||{}
         }))
       )
       .catch((err) => {
@@ -156,47 +172,48 @@ class BestBooks extends React.Component {
   };
 
   render() {
-    // console.log(this.state.noBooks, this.state.books);
+    // console.log(this.state.updateBook);
     return (
       <>
         <HeaderButton
+          noBooks={this.state.noBooks}
+          showSpinner={this.state.showSpinner}
           handlerShowAddBook={() => this.setState({ showAddBook: true })}
+          handlerDeleteBook={()=>this.handlerDeleteBook(this.state.updateBook._id)}
+          handlerShowUpdateBook={()=>this.setState({showUpdateBook:true})}
         />
 
         <AddBookModal
+          addBook={addBook}
           showAddBook={this.state.showAddBook}
           handlerShowAddBook={() => this.setState({ showAddBook: false })}
           handlerAddBook={this.handlerAddBook}
         />
 
         <UpdateBookModal
+          updateBook={this.state.updateBook}
           showUpdateBook={this.state.showUpdateBook}
-          handlerShowUpdateBook={() => this.setState({ showUpdateBook: false })}
+          handlerShowUpdateBook={(bool)=>this.setState({showUpdateBook:bool})}
           handlerUpdateBook={this.handlerUpdateBook}
-        /> 
+        />
 
         <ErrorModal
           showError={this.state.showError}
           errorMessage={this.state.errorMessage}
-          handlerClearError={() =>
-            this.setState({ showError: false, errorMessage: "" })
-          }
+          handlerClearError={() =>this.setState({ showError: false, errorMessage: "" })}
         />
 
         {this.state.noBooks ? (
           <CarouselBooks
             noBooks={this.state.noBooks}
-            showSpinner={this.state.showSpinner}
             books={[{ title: "No Books in Collection" }]}
-            handlerDeleteBook={this.handlerDeleteBook}
           />
         ) : (
           <CarouselBooks
             noBooks={this.state.noBooks}
-            showSpinner={this.state.showSpinner}
             books={this.state.books}
-            handlerShowUpdateBook={this.handlerShowUpdateBook}
-            handlerDeleteBook={this.handlerDeleteBook}
+            carouselIndex={this.state.carouselIndex}
+            handlerCarouselIndex={this.handlerCarouselIndex}
           />
         )}
       </>
