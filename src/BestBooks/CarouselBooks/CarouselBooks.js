@@ -1,7 +1,7 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
-import Spinner from "react-bootstrap/Spinner";
-import Button from "react-bootstrap/Button";
+// import Spinner from "react-bootstrap/Spinner";
+// import Button from "react-bootstrap/Button";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -9,16 +9,6 @@ import "./CarouselBooks.css";
 
 
 export default class CarouselBooks extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      carouselIndex: 0,
-    };
-  }
-
-  handlerCarouselIndex = (selectedIndex) => {
-    this.setState({ carouselIndex: selectedIndex });
-  };
 
   render() {
     let CarouselItems = this.props.books.map((book, idx) => {
@@ -43,33 +33,6 @@ export default class CarouselBooks extends React.Component {
           ) : (
             <h3>{`${book.title}`}</h3>
           )}
-
-          {this.props.showSpinner && (
-            <Spinner animation="border" variant="primary" />
-          )}
-
-          {!this.props.showSpinner && !this.props.noBooks && (
-            <>
-              <Button
-                className="buttonDelete"
-                variant="secondary"
-                onClick={() => {
-                  this.props.handlerShowUpdateBook(true, book);
-                }}>
-                Update Book
-              </Button>
-              <Button
-                className="buttonDelete"
-                variant="primary"
-                onClick={() => {
-                  this.props.handlerDeleteBook(book._id);
-                  this.setState({ carouselIndex: 0 });
-                }}
-              >
-                Delete Book
-              </Button>
-            </>
-          )}
         </Carousel.Caption>
       </Carousel.Item>
       );
@@ -82,8 +45,8 @@ export default class CarouselBooks extends React.Component {
             <Carousel
               className="carouselParent"
               interval={null}
-              activeIndex={this.state.carouselIndex}
-              onSelect={this.handlerCarouselIndex}
+              activeIndex={this.props.carouselIndex}
+              onSelect={this.props.handlerCarouselIndex}
             >
               {CarouselItems}
             </Carousel>

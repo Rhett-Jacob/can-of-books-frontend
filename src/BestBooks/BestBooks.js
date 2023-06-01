@@ -23,6 +23,7 @@ class BestBooks extends React.Component {
       noBooks: true,
       books: [],
       updateBook:{},
+      carouselIndex:0,
       errorMessage: "",
     };
   }
@@ -30,7 +31,9 @@ class BestBooks extends React.Component {
   componentDidMount() {
     axios
       .get(`${SERVER}/books`)
-      .then((res) => this.setState({ books: res.data.data }))
+      .then((res) => {
+        const resBooks = res.data.data;
+        this.setState({ books: resBooks, updateBook:resBooks[0], carouselIndex:0})})
       .then((item) =>
         this.state.books.length > 0
           ? this.setState({ noBooks: false })
@@ -44,6 +47,15 @@ class BestBooks extends React.Component {
           noBooks: true,
         });
       });
+  }
+
+
+  handlerCarouselIndex = (idx) => {
+    this.setState(prevState => ({
+      ...prevState,
+      carouselIndex:idx,
+      updateBook: prevState.books[idx]
+    }))
   }
 
   handlerAddBook = (e) => {
@@ -65,11 +77,15 @@ class BestBooks extends React.Component {
 
       axios
         .post(url, newBook)
-        .then((res) =>
-          this.setState({
-            books: [...this.state.books, res.data],
+        .then((res) => {
+          let resBook = res.data;
+          this.setState(prevState => ({
+            ...prevState,
+            books: [...prevState.books, resBook],
+            carouselIndex: prevState.books.length,
+            updateBook:resBook,
             noBooks: false,
-          })
+          }))}
         )
         .catch((err) => {
           // console.error(err.message);
@@ -99,19 +115,21 @@ class BestBooks extends React.Component {
         description: bookDescription,
         status: bookStatus,
       };
-      // console.log(updateBook);
+  
       let url = `${SERVER}/books/${id}`;
-
+      // console.log(url,updateBook);
       this.setState({ showUpdateBook: false });
 
       axios
         .put(url, updateBook)
         .then((res) => {
-          this.setState({ 
-            books: this.state.books.map(book=>book._id===id?res.data:book),
+          let updatedBook = res.data;
+          this.setState(prevState => ({
+            ...prevState,
+            books: prevState.books.map(book=>book._id===id?updatedBook:book),
             noBooks: false,
-          });
-          console.log(res.data);
+          }));
+          console.log(res);
         }
         )
         .catch((err) => {
@@ -136,9 +154,11 @@ class BestBooks extends React.Component {
       .then((res) =>
         this.setState((prevState) => ({
           ...prevState,
-          books: this.state.books.filter((book) => book._id !== _id),
+          books: prevState.books.filter((book) => book._id !== _id),
           noBooks: prevState.books.length === 1 ? true : false,
           showSpinner: false,
+          carouselIndex:(prevState.carouselIndex-1)>0?prevState.carouselIndex-1:0,
+          updateBook:prevState.books[(prevState.carouselIndex-1)>0?prevState.carouselIndex-1:0]||{}
         }))
       )
       .catch((err) => {
@@ -151,11 +171,15 @@ class BestBooks extends React.Component {
   };
 
   render() {
-    // console.log(this.state.updateBook);
+    console.log(this.state.updateBook);
     return (
       <>
         <HeaderButton
+          noBooks={this.state.noBooks}
+          showSpinner={this.state.showSpinner}
           handlerShowAddBook={() => this.setState({ showAddBook: true })}
+          handlerDeleteBook={()=>this.handlerDeleteBook(this.state.updateBook._id)}
+          handlerShowUpdateBook={()=>this.setState({showUpdateBook:true})}
         />
 
         <AddBookModal
@@ -185,15 +209,13 @@ class BestBooks extends React.Component {
             noBooks={this.state.noBooks}
             showSpinner={this.state.showSpinner}
             books={[{ title: "No Books in Collection" }]}
-            handlerDeleteBook={this.handlerDeleteBook}
           />
         ) : (
           <CarouselBooks
             noBooks={this.state.noBooks}
-            showSpinner={this.state.showSpinner}
             books={this.state.books}
-            handlerDeleteBook={this.handlerDeleteBook}
-            handlerShowUpdateBook={(bool,book)=>this.setState({showUpdateBook:bool,updateBook:book})}
+            carouselIndex={this.state.carouselIndex}
+            handlerCarouselIndex={this.handlerCarouselIndex}
           />
         )}
       </>
