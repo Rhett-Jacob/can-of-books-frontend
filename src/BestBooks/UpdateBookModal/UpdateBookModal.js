@@ -9,7 +9,7 @@ class UpdateBookModal extends React.Component {
         return (
             <Modal
                 show={this.props.showUpdateBook}
-                onHide={()=>this.props.handlerShowUpdateBook(false,{})}
+                onHide={()=>this.props.handlerShowUpdateBook(false)}
                 centered
             >
                 <Modal.Header closeButton>
@@ -49,7 +49,7 @@ class UpdateBookModal extends React.Component {
                             <Button
                                 className="buttonDelete buttonModal"
                                 variant="secondary"
-                                onClick={()=>this.props.handlerShowUpdateBook(false,{})}
+                                onClick={()=>this.props.handlerShowUpdateBook(false)}
                             >
                                 Close Form
                             </Button>
