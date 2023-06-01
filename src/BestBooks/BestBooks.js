@@ -128,6 +128,7 @@ class BestBooks extends React.Component {
             ...prevState,
             books: prevState.books.map(book=>book._id===id?updatedBook:book),
             noBooks: false,
+            updateBook:updatedBook
           }));
           console.log(res);
         }
@@ -157,8 +158,8 @@ class BestBooks extends React.Component {
           books: prevState.books.filter((book) => book._id !== _id),
           noBooks: prevState.books.length === 1 ? true : false,
           showSpinner: false,
-          carouselIndex:(prevState.carouselIndex-1)>0?prevState.carouselIndex-1:0,
-          updateBook:prevState.books[(prevState.carouselIndex-1)>0?prevState.carouselIndex-1:0]||{}
+          carouselIndex:0,
+          updateBook:prevState.books[0]||{}
         }))
       )
       .catch((err) => {
@@ -192,7 +193,7 @@ class BestBooks extends React.Component {
         <UpdateBookModal
           updateBook={this.state.updateBook}
           showUpdateBook={this.state.showUpdateBook}
-          handlerShowUpdateBook={(bool,book)=>this.setState({showUpdateBook:bool,updateBook:book})}
+          handlerShowUpdateBook={(bool)=>this.setState({showUpdateBook:bool})}
           handlerUpdateBook={this.handlerUpdateBook}
         />
 
