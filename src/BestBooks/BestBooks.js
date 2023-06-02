@@ -33,12 +33,7 @@ class BestBooks extends React.Component {
       .get(`${SERVER}/books`)
       .then((res) => {
         const resBooks = res.data.data;
-        this.setState({ books: resBooks, updateBook:resBooks[0]||{title:"NA",description:"NA",status:"NA"}, carouselIndex:0})})
-      .then((item) => {
-        this.state.books.length > 0
-          ? this.setState({ noBooks: false })
-          : this.setState({ noBooks: true });
-      })
+        this.setState({ books: resBooks, updateBook:resBooks[0]||{title:"NA",description:"NA",status:"NA"}, carouselIndex:0, noBooks: false})})
       .catch((err) => {
         // console.error(err);
         this.setState({
