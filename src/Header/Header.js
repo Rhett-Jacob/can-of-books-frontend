@@ -11,7 +11,7 @@ class Header extends React.Component {
   render() {
     return (
       <Container className="carouselContainer">
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-md-center carouselRow">
             <Col xs={10} md={10} lg={10}>
               <Navbar expand="md" className="header">
               

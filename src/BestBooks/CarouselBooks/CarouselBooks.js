@@ -23,12 +23,12 @@ export default class CarouselBooks extends React.Component {
           className='carouselCaption'>
           {!this.props.noBooks ? (
             <>
-              <p className="carouselCaptionHeader">{`${book.title}`}</p>
-              <p>{`${book.description}`}</p>
-              <p>{`${book.status}`}</p>
+              <p className="carouselCaptionHeader carouselText">{`${book.title}`}</p>
+              <p className="carouselText">{`${book.description}`}</p>
+              <p className="carouselText">{`Available: ${book.status}`}</p>
             </>
           ) : (
-            <h3>{`${book.title}`}</h3>
+            <h3 className="carouselCaptionHeader carouselText">{`${book.title}`}</h3>
           )}
         </Carousel.Caption>
       </Carousel.Item>
@@ -37,8 +37,11 @@ export default class CarouselBooks extends React.Component {
 
     return (
       <Container className="carouselContainer">
-        <Row className="justify-content-md-center">
-          <Col xs={10} md={10} lg={10}>
+        <Row 
+          className="justify-content-md-center carouselRow">
+          <Col 
+            xs={10} md={10} lg={10}
+            className="carouselColumn">
             <Carousel
               className="carouselParent"
               interval={null}

@@ -20,6 +20,7 @@ class UpdateBookModal extends React.Component {
                         onSubmit={(event)=>this.props.handlerUpdateBook(event,this.props.updateBook._id)}>
                         <Form.Group 
                             className="mb-3" 
+                            id="title"
                             controlId="bookTitle">
                             <Form.Label>Book Title:</Form.Label>
                             <Form.Control

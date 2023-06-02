@@ -9,7 +9,7 @@ class Footer extends React.Component {
   render() {
     return (
       <Container className="carouselContainer">
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-md-center carouselRow">
           <Col xs={10} md={10} lg={10}>
             <Navbar collapseOnSelect expand="lg" className='footer'>
               <Navbar.Brand className="footerText">&copy;Rhett&Jacob</Navbar.Brand>

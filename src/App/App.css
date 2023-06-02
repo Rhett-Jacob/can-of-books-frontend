@@ -1,104 +1,305 @@
 :root {
-    --eggshell: #f4f1deff;
-    --burnt-sienna: #e07a5fff;
-    --delft-blue: #3d405bff;
-    --cambridge-blue: #81b29aff;
-    --sunset: #f2cc8fff;
+  --eggshell: #f4f1deff;
+  --burnt-sienna: #e07a5fff;
+  --delft-blue: #3d405bff;
+  --cambridge-blue: #81b29aff;
+  --sunset: #f2cc8fff;
 }
 
 .app {
-    background-color:var(--delft-blue);
+  background-color: var(--delft-blue);
+}
+
+.welcome {
+  display: flex;
+  justify-content: center;
+  /* align-items: space-between; */
+  padding: 0.5rem;
+  gap: 2rem;
+  /* outline: 1px red solid; */
 }
 
 .buttonAdd {
   /* outline:2px solid red; */
-  background-color:var(--cambridge-blue);
+  background-color: var(--cambridge-blue);
   border: 2px solid var(--cambridge-blue);
   padding: 1rem 2rem;
   font-size: 1.2rem;
+  min-width:100px;
+  width:200px;
 }
 
 .buttonAdd:hover {
-    background-color: rgb(94, 118, 106);
-    padding: 1.1rem 2.1rem;
-    margin: -0.1rem 0;
-    border: 2px solid var(--cambridge-blue)
+  background-color: rgb(94, 118, 106);
+  padding: 1.1rem 2.1rem;
+  margin: -0.1rem 0;
+  border: 2px solid var(--cambridge-blue)
 }
 
+.buttonUpdate {
+  background-color: var(--sunset);
+  border: 2px solid var(--sunset);
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  min-width:100px;
+  width:200px;
+}
 
-.welcome {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.5rem;
+.buttonUpdate:hover {
+  background-color: rgb(195, 193, 79);
+  padding: 1.1rem 2.1rem;
+  /* transform: scaleX(1.1); */
+  margin: -0.1rem 0;
+  border: 2px solid var(--sunset);
 }
 
 .buttonDelete {
-  background-color:var(--burnt-sienna);
+  background-color: var(--burnt-sienna);
   border: 2px solid var(--burnt-sienna);
   padding: 1rem 2rem;
   font-size: 1.2rem;
+  min-width:100px;
+  width:200px;
 }
 
 .buttonDelete:hover {
-  background-color: rgb(227, 105, 71);
+  background-color: rgb(203, 72, 36);
   padding: 1.1rem 2.1rem;
   margin: -0.1rem 0;
   border: 2px solid var(--burnt-sienna);
 }
 
 .buttonModalContainer {
-  display:flex;
-  flex-direction:row;
-  flex-wrap:nowrap;
-  justify-content:space-between;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
-
-/* .buttonModal {
-} */
 
 .footer {
-    background-color:var(--delft-blue);
-    display: flex;
-    justify-content: flex-end;
+  background-color: var(--delft-blue);
+  display: flex;
+  justify-content: flex-end;
 }
 
-span.footerText.navbar-brand{
-    color: var(--eggshell)!important;
-    font-size: 0.85rem;
-    margin-right: 2rem;
+span.footerText.navbar-brand {
+  color: var(--eggshell) !important;
+  font-size: 0.85rem;
+  margin-right: 2rem;
 }
 
-.carouselParent {
-  border:10px solid var(--sunset);
+.carouselRow {
   display:flex;
-  flex-direction:column;
+  flex-direction:row;
   flex-wrap:nowrap;
   justify-content:center;
 }
 
+.carouselParent {
+  border: 10px solid var(--sunset);
+}
+
 .carouselImage {
-object-fit:cover;
+  object-fit: cover;
 }
 
 .carouselCaption {
-background-color:rgba(244, 241, 222,0.8);
-/* outline:2px solid red; */
-color:var(--delft-blue) !important;
-border-radius:0.5em;
-font-size:2em;
+  background-color: rgba(244, 241, 222, 0.7);
+  /* outline:2px solid red; */
+  color: var(--delft-blue) !important;
+  border-radius: 0.5em;
+  font-size: 2em;
+  height:80%;
+  display:flex;
+  flex-direction:column;
+  flex-wrap:nowrap;
+  justify-content:space-evenly;
 }
 
 .carouselCaptionHeader {
-font-weight:bold;
+  font-weight: bold;
+}
+
+.carouselText{
+  font-size:1em;
 }
 
 .textAboutUs {
-  font-size:0.5em !important;
+  font-size: 0.5em !important;
 }
 
 .link {
-  color:var(--delft-blue);
-  text-decoration:none;
+  color: var(--delft-blue);
+  text-decoration: none;
+}
+
+@media only screen and (min-width: 100px) and (max-width: 375px) {
+  .welcome {
+    gap: 0rem;
+  }
+
+  .buttonAdd {
+    padding: 0.1rem 0.05rem;
+    font-size: 0.6rem;
+    width:40px;
+  }
+  
+  .buttonAdd:hover {
+    padding: 0.2rem 0.35rem;
+    margin: -0.1rem 0;
+  }
+  
+  .buttonUpdate {
+    padding: 0.1rem 0.05rem;
+    font-size: 0.6rem;
+    width:40px;
+  }
+  
+  .buttonUpdate:hover {
+    padding: 0.2rem 0.35rem;
+    margin: -0.1rem 0;
+  }
+  
+  .buttonDelete {
+    padding: 0.1rem 0.05rem;
+    font-size: 0.6rem;
+    width:40px;
+  }
+  
+  .buttonDelete:hover {
+    padding: 0.2rem 0.35rem;
+    margin: -0.1rem 0;
+  }
+
+  .carouselText{
+    font-size:0.4em;
+  }
+}
+
+@media only screen and (min-width: 376px) and (max-width: 400px) {
+  .welcome {
+    gap: 0.2rem;
+  }
+
+  .buttonAdd {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.6rem;
+    width:80px;
+  }
+  
+  .buttonAdd:hover {
+    padding: 0.6rem 0.85rem;
+    margin: -0.1rem 0;
+  }
+  
+  .buttonUpdate {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.6rem;
+    width:80px;
+  }
+  
+  .buttonUpdate:hover {
+    padding: 0.6rem 0.85rem;
+    margin: -0.1rem 0;
+  }
+  
+  .buttonDelete {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.6rem;
+    width:80px;
+  }
+  
+  .buttonDelete:hover {
+    padding: 0.6rem 0.85rem;
+    margin: -0.1rem 0;
+  }
+
+  .carouselText{
+    font-size:0.4em;
+  }
+}
+
+@media only screen and (min-width: 401px) and (max-width: 545px) {
+  .welcome {
+    gap: 0.5rem;
+  }
+  .buttonAdd {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+    width:110px;
+  }
+  
+  .buttonAdd:hover {
+    padding: 0.85rem 1.1rem;
+    margin: -0.1rem 0;
+  }
+  
+  .buttonUpdate {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+    width:110px;
+  }
+  
+  .buttonUpdate:hover {
+    padding: 0.85rem 1.1rem;
+    margin: -0.1rem 0;
+  }
+  
+  .buttonDelete {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+    width:110px;
+  }
+  
+  .buttonDelete:hover {
+    padding: 0.85rem 1.1rem;
+    margin: -0.1rem 0;
+  }
+
+  .carouselText{
+    font-size:0.6em;
+  }
+}
+
+@media only screen and (min-width: 546px) and (max-width: 769px) {
+  .welcome {
+    gap: 1rem;
+  }
+  .buttonAdd {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    width:150px;
+  }
+  
+  .buttonAdd:hover {
+    padding: 1.1rem 2.1rem;
+    margin: -0.1rem 0;
+  }
+  
+  .buttonUpdate {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    width:150px;
+  }
+  
+  .buttonUpdate:hover {
+    padding: 1.1rem 2.1rem;
+    margin: -0.1rem 0;
+  }
+  
+  .buttonDelete {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    width:150px;
+  }
+  
+  .buttonDelete:hover {
+    padding: 1.1rem 2.1rem;
+    margin: -0.1rem 0;
+  }
+
+  .carouselText{
+    font-size:0.8em;
+  }
 }
 

@@ -34,11 +34,11 @@ class BestBooks extends React.Component {
       .then((res) => {
         const resBooks = res.data.data;
         this.setState({ books: resBooks, updateBook:resBooks[0], carouselIndex:0})})
-      .then((item) =>
+      .then((item) => {
         this.state.books.length > 0
           ? this.setState({ noBooks: false })
-          : this.setState({ noBooks: true })
-      )
+          : this.setState({ noBooks: true });
+      })
       .catch((err) => {
         // console.error(err);
         this.setState({
