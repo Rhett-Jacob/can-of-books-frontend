@@ -17,7 +17,9 @@ class AddBookModal extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={this.props.handlerAddBook}>
-                        <Form.Group className="mb-3" controlId="bookTitle">
+                        <Form.Group 
+                            className="mb-3" 
+                            controlId="bookTitle">
                             <Form.Label>Book Title:</Form.Label>
                             <Form.Control
                                 type="text"
@@ -25,16 +27,22 @@ class AddBookModal extends React.Component {
                                 autoFocus
                             />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="bookDescription">
+                        <Form.Group 
+                            className="mb-3" 
+                            controlId="bookDescription">
                             <Form.Label>Book Description:</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder={this.props.addBook.description}
                             />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="bookStatus">
+                        <Form.Group 
+                            className="mb-3" 
+                            controlId="bookStatus">
                             <Form.Label>Is Available:</Form.Label>
-                            <Form.Control type="text" placeholder={this.props.addBook.status} />
+                            <Form.Control 
+                                type="text" 
+                                placeholder={this.props.addBook.status} />
                         </Form.Group>
                         <div className="buttonModalContainer">
                             <Button 
@@ -46,8 +54,7 @@ class AddBookModal extends React.Component {
                             <Button
                                 className="buttonDelete buttonModal"
                                 variant="secondary"
-                                onClick={this.props.handlerAddBook}
-                            >
+                                onClick={this.props.handlerAddBook}>
                                 Close Form
                             </Button>
                         </div>

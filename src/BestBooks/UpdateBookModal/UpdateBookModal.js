@@ -16,41 +16,46 @@ class UpdateBookModal extends React.Component {
                     <Modal.Title>Update Your Favorite Book</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={(event)=>this.props.handlerUpdateBook(event,this.props.updateBook._id)}>
-                        <Form.Group className="mb-3" controlId="bookTitle">
+                    <Form 
+                        onSubmit={(event)=>this.props.handlerUpdateBook(event,this.props.updateBook._id)}>
+                        <Form.Group 
+                            className="mb-3" 
+                            id="title"
+                            controlId="bookTitle">
                             <Form.Label>Book Title:</Form.Label>
                             <Form.Control
                                 type="text"
                                 defaultValue={this.props.updateBook.title}
-                                autoFocus
-                            />
+                                autoFocus/>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="bookDescription">
+                        <Form.Group 
+                            className="mb-3" 
+                            controlId="bookDescription">
                             <Form.Label>Book Description:</Form.Label>
                             <Form.Control
                                 type="text"
-                                defaultValue={this.props.updateBook.description}
-                            />
+                                defaultValue={this.props.updateBook.description}/>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="bookStatus">
+                        <Form.Group 
+                            className="mb-3" 
+                            controlId="bookStatus">
                             <Form.Label>Is Available:</Form.Label>
                             <Form.Control 
                               type="text" 
-                              defaultValue={this.props.updateBook.status} />
+                              defaultValue={this.props.updateBook.status}/>
                         </Form.Group>
-                        <div className="buttonModalContainer">
+                        <div 
+                            className="buttonModalContainer">
                             <Button 
                                 className="buttonAdd buttonModal"
                                 variant="primary" 
-                                type="submit"
-                            >
+                                type="submit">
                                 Update Book
                             </Button>
                             <Button
                                 className="buttonDelete buttonModal"
                                 variant="secondary"
-                                onClick={()=>this.props.handlerShowUpdateBook(false)}
-                            >
+                                onClick={()=>this.props.handlerShowUpdateBook(false)}>
                                 Close Form
                             </Button>
                         </div>

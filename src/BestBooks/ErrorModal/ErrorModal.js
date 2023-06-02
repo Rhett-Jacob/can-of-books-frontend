@@ -8,9 +8,9 @@ export default class ErrorModal extends React.Component {
       <Modal
           show={this.props.showError}
           onHide={this.props.handlerClearError}
-          centered
-        >
-          <Modal.Header closeButton>
+          centered>
+          <Modal.Header 
+            closeButton>
             <Modal.Title>Error!</Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -20,8 +20,7 @@ export default class ErrorModal extends React.Component {
             <Button
               className="buttonDelete buttonModal"
               variant="secondary"
-              onClick={this.props.handlerClearError}
-            >
+              onClick={this.props.handlerClearError}>
               Dismiss Error
             </Button>
           </Modal.Footer>

@@ -23,7 +23,7 @@ class Profile extends React.Component {
                 className="d-block w-100"
                 style={{ height: "500px", width:"500px" }}
                 src={rhettImage}
-                alt={"rhett's profile pic"}
+                alt="rhett's profile pic"
               />
               <Carousel.Caption
                 className="carouselCaption">
@@ -36,7 +36,7 @@ class Profile extends React.Component {
                 className="d-block w-100"
                 style={{ height: "500px"}}
                 src={jacobImage}
-                alt={"jacob's profile pic"}
+                alt="jacob's profile pic"
               />
               <Carousel.Caption
                 className="carouselCaption">

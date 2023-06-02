@@ -34,11 +34,11 @@ class BestBooks extends React.Component {
       .then((res) => {
         const resBooks = res.data.data;
         this.setState({ books: resBooks, updateBook:resBooks[0], carouselIndex:0})})
-      .then((item) =>
+      .then((item) => {
         this.state.books.length > 0
           ? this.setState({ noBooks: false })
-          : this.setState({ noBooks: true })
-      )
+          : this.setState({ noBooks: true });
+      })
       .catch((err) => {
         // console.error(err);
         this.setState({
@@ -130,7 +130,7 @@ class BestBooks extends React.Component {
             noBooks: false,
             updateBook:updatedBook
           }));
-          console.log(res);
+          // console.log(res);
         }
         )
         .catch((err) => {
@@ -147,15 +147,15 @@ class BestBooks extends React.Component {
     }
   };
 
-  handlerDeleteBook = (_id) => {
+  handlerDeleteBook = (id) => {
     this.setState({ showSpinner: true });
-    let url = `${SERVER}/books/${_id}`;
+    let url = `${SERVER}/books/${id}`;
     axios
       .delete(url)
       .then((res) =>
         this.setState((prevState) => ({
           ...prevState,
-          books: prevState.books.filter((book) => book._id !== _id),
+          books: prevState.books.filter((book) => book._id !== id),
           noBooks: prevState.books.length === 1 ? true : false,
           showSpinner: false,
           carouselIndex:0,
@@ -172,7 +172,7 @@ class BestBooks extends React.Component {
   };
 
   render() {
-    console.log(this.state.updateBook);
+    // console.log(this.state.updateBook);
     return (
       <>
         <HeaderButton
@@ -200,15 +200,12 @@ class BestBooks extends React.Component {
         <ErrorModal
           showError={this.state.showError}
           errorMessage={this.state.errorMessage}
-          handlerClearError={() =>
-            this.setState({ showError: false, errorMessage: "" })
-          }
+          handlerClearError={() =>this.setState({ showError: false, errorMessage: "" })}
         />
 
         {this.state.noBooks ? (
           <CarouselBooks
             noBooks={this.state.noBooks}
-            showSpinner={this.state.showSpinner}
             books={[{ title: "No Books in Collection" }]}
           />
         ) : (

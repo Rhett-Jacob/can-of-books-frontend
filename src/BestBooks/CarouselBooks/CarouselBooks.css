@@ -1,15 +1,14 @@
 
-/* .carouselContainer {
-  background-color:var(--sunset);
-  width:100vw;
+/* 
+solution from @Sebsemillia 
+https://stackoverflow.com/questions/27279865/how-to-vertically-center-a-bootstrap-carousel-caption
 } */
 
 .carouselParent {
     border:10px solid var(--sunset);
-    display:flex;
-    flex-direction:column;
-    flex-wrap:nowrap;
-    justify-content:center;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
 }
 
 .carouselImage {
@@ -22,6 +21,9 @@
   color:var(--delft-blue) !important;
   border-radius:0.5em;
   font-size:2em;
+  top: 50%;
+  transform: translateY(-50%);
+  bottom: initial;
 }
 
 .carouselCaptionHeader {

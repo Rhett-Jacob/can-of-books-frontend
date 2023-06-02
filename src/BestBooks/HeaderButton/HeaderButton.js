@@ -16,7 +16,7 @@ class HeaderButton extends React.Component {
                 </Button>
                 {!this.props.noBooks && (
                     <Button
-                        className="buttonDelete"
+                        className="buttonUpdate marginLeft"
                         variant="secondary"
                         onClick={this.props.handlerShowUpdateBook}>
                         Update Book
@@ -25,7 +25,7 @@ class HeaderButton extends React.Component {
                 {this.props.showSpinner && !this.props.noBooks ?
                 <Spinner animation="border" variant="primary" />:
                 <Button
-                    className="buttonDelete"
+                    className="buttonDelete marginLeft"
                     variant="primary"
                     onClick={this.props.handlerDeleteBook}>
                     Delete Book
