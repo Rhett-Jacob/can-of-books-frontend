@@ -13,6 +13,8 @@
 .welcome {
   display: flex;
   justify-content: center;
+  align-content:center;
+  align-items:center;
   /* align-items: space-between; */
   padding: 0.5rem;
   gap: 2rem;
@@ -116,6 +118,11 @@ span.footerText.navbar-brand {
   justify-content:space-evenly;
 }
 
+.carouselAboutUs {
+  height:30%;
+  transform: translateY(60%);
+}
+
 .carouselCaptionHeader {
   font-weight: bold;
 }
@@ -125,7 +132,7 @@ span.footerText.navbar-brand {
 }
 
 .textAboutUs {
-  font-size: 0.5em !important;
+  font-size: 0.5em;
 }
 
 .link {
@@ -217,6 +224,9 @@ span.footerText.navbar-brand {
   .carouselText{
     font-size:0.4em;
   }
+  .textAboutUs {
+    font-size: 0.3em;
+  }
 }
 
 @media only screen and (min-width: 401px) and (max-width: 545px) {
@@ -259,6 +269,10 @@ span.footerText.navbar-brand {
   .carouselText{
     font-size:0.6em;
   }
+
+  .textAboutUs {
+    font-size: 0.4em;
+  }
 }
 
 @media only screen and (min-width: 546px) and (max-width: 769px) {
@@ -300,6 +314,10 @@ span.footerText.navbar-brand {
 
   .carouselText{
     font-size:0.8em;
+  }
+
+  .textAboutUs {
+    font-size: 0.5em;
   }
 }
 

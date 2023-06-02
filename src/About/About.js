@@ -26,7 +26,7 @@ class Profile extends React.Component {
                 alt="rhett's profile pic"
               />
               <Carousel.Caption
-                className="carouselCaption">
+                className="carouselCaption carouselAboutUs">
                 <h3 className="textAboutUs">Rhett Beardemphl</h3>
                 <p className="textAboutUs">Rhett was a LA creative who found a new home for his creativity in web and app development.</p>
               </Carousel.Caption>
@@ -39,7 +39,7 @@ class Profile extends React.Component {
                 alt="jacob's profile pic"
               />
               <Carousel.Caption
-                className="carouselCaption">
+                className="carouselCaption carouselAboutUs">
                 <h3 className="textAboutUs">Jacob Bassett</h3>
                 <p className="textAboutUs">Jacob was a molecular biologist turned code slinger who likes the taste of nucleotides with his glutamate.<a className="link" href="https://www.youtube.com/watch?v=GHX3aaLmjMI"> [link]</a></p>
               </Carousel.Caption>

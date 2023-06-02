@@ -12,24 +12,27 @@ class HeaderButton extends React.Component {
                     variant="primary"
                     onClick={this.props.handlerShowAddBook}
                 >
-                    Add Book
+                    Add
                 </Button>
-                {!this.props.noBooks && (
+                {!this.props.noBooks?
                     <Button
                         className="buttonUpdate marginLeft"
                         variant="secondary"
                         onClick={this.props.handlerShowUpdateBook}>
-                        Update Book
-                    </Button>)}
+                        Update
+                    </Button>:
+                    null}
                 
-                {this.props.showSpinner && !this.props.noBooks ?
-                <Spinner animation="border" variant="primary" />:
-                <Button
-                    className="buttonDelete marginLeft"
-                    variant="primary"
-                    onClick={this.props.handlerDeleteBook}>
-                    Delete Book
-                </Button>
+                {!this.props.noBooks?
+                    (this.props.showSpinner?
+                    <Spinner animation="border" variant="primary" />:
+                    <Button
+                        className="buttonDelete marginLeft"
+                        variant="primary"
+                        onClick={this.props.handlerDeleteBook}>
+                        Delete
+                    </Button>):
+                    null
                 }
                 
             </div>
