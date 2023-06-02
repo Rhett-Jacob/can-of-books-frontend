@@ -22,7 +22,7 @@ class BestBooks extends React.Component {
       showSpinner: false,
       noBooks: true,
       books: [],
-      updateBook:{},
+      updateBook:{title:"NA",description:"NA",status:"NA"},
       carouselIndex:0,
       errorMessage: "",
     };
@@ -33,7 +33,7 @@ class BestBooks extends React.Component {
       .get(`${SERVER}/books`)
       .then((res) => {
         const resBooks = res.data.data;
-        this.setState({ books: resBooks, updateBook:resBooks[0], carouselIndex:0})})
+        this.setState({ books: resBooks, updateBook:resBooks[0]||{title:"NA",description:"NA",status:"NA"}, carouselIndex:0})})
       .then((item) => {
         this.state.books.length > 0
           ? this.setState({ noBooks: false })
@@ -54,7 +54,7 @@ class BestBooks extends React.Component {
     this.setState(prevState => ({
       ...prevState,
       carouselIndex:idx,
-      updateBook: prevState.books[idx]
+      updateBook: prevState.books[idx]||{title:"NA",description:"NA",status:"NA"}
     }))
   }
 
@@ -159,7 +159,7 @@ class BestBooks extends React.Component {
           noBooks: prevState.books.length === 1 ? true : false,
           showSpinner: false,
           carouselIndex:0,
-          updateBook:prevState.books[0]||{}
+          updateBook:prevState.books[0]||{title:"NA",description:"NA",status:"NA"}
         }))
       )
       .catch((err) => {
