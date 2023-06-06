@@ -6,6 +6,7 @@ import UpdateBookModal from "./UpdateBookModal/UpdateBookModal";
 import ErrorModal from "./ErrorModal/ErrorModal.js";
 import CarouselBooks from "./CarouselBooks/CarouselBooks";
 import "./BestBooks.css";
+import { withAuth0} from '@auth0/auth0-react';
 
 let SERVER = process.env.REACT_APP_SERVER;
 
@@ -170,14 +171,6 @@ class BestBooks extends React.Component {
     // console.log(this.state.updateBook);
     return (
       <>
-        <HeaderButton
-          noBooks={this.state.noBooks}
-          showSpinner={this.state.showSpinner}
-          handlerShowAddBook={() => this.setState({ showAddBook: true })}
-          handlerDeleteBook={()=>this.handlerDeleteBook(this.state.updateBook._id)}
-          handlerShowUpdateBook={()=>this.setState({showUpdateBook:true})}
-        />
-
         <AddBookModal
           addBook={addBook}
           showAddBook={this.state.showAddBook}
@@ -198,22 +191,39 @@ class BestBooks extends React.Component {
           handlerClearError={() =>this.setState({ showError: false, errorMessage: "" })}
         />
 
-        {this.state.noBooks ? (
-          <CarouselBooks
+        {false?
+          <HeaderButton
             noBooks={this.state.noBooks}
-            books={[{ title: "No Books in Collection" }]}
-          />
-        ) : (
+            showSpinner={this.state.showSpinner}
+            handlerShowAddBook={() => this.setState({ showAddBook: true })}
+            handlerDeleteBook={()=>this.handlerDeleteBook(this.state.updateBook._id)}
+            handlerShowUpdateBook={()=>this.setState({showUpdateBook:true})}
+          />:
+          null
+          }
+
+
+        {false ?
+          this.state.noBooks ? (
+            <CarouselBooks
+              noBooks={this.state.noBooks}
+              books={[{ title: "No Books in Collection" }]}
+            />
+          ) : (
+            <CarouselBooks
+              noBooks={this.state.noBooks}
+              books={this.state.books}
+              carouselIndex={this.state.carouselIndex}
+              handlerCarouselIndex={this.handlerCarouselIndex}
+            />
+          ):
           <CarouselBooks
-            noBooks={this.state.noBooks}
-            books={this.state.books}
-            carouselIndex={this.state.carouselIndex}
-            handlerCarouselIndex={this.handlerCarouselIndex}
-          />
-        )}
+            noBooks={true}
+            books={[{ title: "Login to curate your book collection!" }]}/>
+        }
       </>
     );
   }
 }
 
-export default BestBooks;
+export default withAuth0(BestBooks);

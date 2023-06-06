@@ -12,7 +12,6 @@ import {withAuth0} from '@auth0/auth0-react';
 
 class Header extends React.Component {
   render() {
-    console.log(this.props.auth0.isAuthenticated)
     return (
       <Container className="carouselContainer">
         <Row className="justify-content-md-center carouselRow">
@@ -27,9 +26,9 @@ class Header extends React.Component {
                       <NavItem><Link to="/about" className="nav-link">About-Us</Link></NavItem>
                       {/* 6-6-23 */}
                       {this.props.auth0.isAuthenticated?
-                      <NavItem><LogOut/></NavItem>:
-                      <NavItem><Login/></NavItem>}
-                      {/* <NavItem><LogOut/></NavItem> */}
+                        <NavItem><LogOut /></NavItem>:
+                        <NavItem><Login/></NavItem>}
+           
                     </Nav>
                   </Navbar.Collapse>
               
