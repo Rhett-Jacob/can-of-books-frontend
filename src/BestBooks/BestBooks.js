@@ -31,11 +31,8 @@ class BestBooks extends React.Component {
 
 
   componentDidMount() {
-
-      if (this.props.auth0.isAuthenticated){
         this.props.auth0.getIdTokenClaims()
           .then(res => {
-            console.log('getIdTokenRan');
             const jwt = res.__raw;
             const config = {
               headers:{"Authorization": `Bearer ${jwt}`},
@@ -56,8 +53,7 @@ class BestBooks extends React.Component {
               });
 
           })
-          .catch(err => console.log(err));
-        }
+          .catch(err => console.log(err));//set stat instead
   }
 
   handlerCarouselIndex = (idx) => {
