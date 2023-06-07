@@ -28,8 +28,8 @@ class UserProfile extends React.Component {
               />
               <Carousel.Caption
                 className="carouselCaption carouselAboutUs">
-                <h3 className="textAboutUs">{this.props.auth0.user.name||"Username not received"}</h3>
-                <p className="textAboutUs">{this.props.auth0.user.email||""}</p>
+                <h3 className="textAboutUs">{`User Name: ${this.props.auth0.user.name}`||"Username not received"}</h3>
+                <p className="textAboutUs">{`Email: ${this.props.auth0.user.email}`||""}</p>
               </Carousel.Caption>
             </Carousel.Item>
           </Carousel>
