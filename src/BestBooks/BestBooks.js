@@ -103,6 +103,9 @@ class BestBooks extends React.Component {
                 noBooks: false,
               }))
             })
+            .catch(err => {
+              this.setState({ showError: true, errorMessage: err.message });
+            })
         })
         .catch(err => {
           this.setState({ showError: true, errorMessage: err.message });
@@ -144,7 +147,7 @@ class BestBooks extends React.Component {
             baseURL: process.env.REACT_APP_SERVER,
             url: `/books/${updateBook._id}`
           } 
-          console.log(config);
+          
           axios(config)
             .then((res) => {
               let updatedBook = res.data;
@@ -163,21 +166,6 @@ class BestBooks extends React.Component {
         .catch((err) => {
           this.setState({ showError: true, errorMessage: err.message });
         });
-      // axios
-      //   .put(url, updateBook)
-      //   .then((res) => {
-      //     let updatedBook = res.data;
-      //     this.setState(prevState => ({
-      //       ...prevState,
-      //       books: prevState.books.map(book => book._id === id ? updatedBook : book),
-      //       noBooks: false,
-      //       updateBook: updatedBook
-      //     }));
-      //   }
-      //   )
-      //   .catch((err) => {
-      //     this.setState({ showError: true, errorMessage: err.message });
-      //   });
     } else {
       this.setState({
         showError: true,
@@ -190,19 +178,33 @@ class BestBooks extends React.Component {
 
   handlerDeleteBook = (id) => {
     this.setState({ showSpinner: true });
-    let url = `${SERVER}/books/${id}`;
-    axios
-      .delete(url)
-      .then((res) =>
-        this.setState((prevState) => ({
-          ...prevState,
-          books: prevState.books.filter((book) => book._id !== id),
-          noBooks: prevState.books.length === 1 ? true : false,
-          showSpinner: false,
-          carouselIndex: 0,
-          updateBook: prevState.books[0] || { title: "NA", description: "NA", status: "NA" }
-        }))
-      )
+
+    this.props.auth0.getIdTokenClaims()
+      .then(res => {
+        let jwt = res.__raw;
+        let config = {
+          headers:{"Authorization":`Bearer ${jwt}`},
+          method:'delete',
+          baseURL:process.env.REACT_APP_SERVER,
+          url:`/books/${id}`};
+        
+        axios(config)
+          .then((res) =>
+            this.setState((prevState) => ({
+              ...prevState,
+              books: prevState.books.filter((book) => book._id !== id),
+              noBooks: prevState.books.length === 1 ? true : false,
+              showSpinner: false,
+              carouselIndex: 0,
+              updateBook: prevState.books[0] || { title: "NA", description: "NA", status: "NA" }
+            })))
+          .catch((err) => {
+            this.setState({
+              showError: true,
+              errorMessage: err.message,
+              showSpinner: false,
+            });
+      })
       .catch((err) => {
         this.setState({
           showError: true,
@@ -210,7 +212,31 @@ class BestBooks extends React.Component {
           showSpinner: false,
         });
       });
-  };
+    })};
+    
+
+
+
+    // axios
+    //   .delete(url)
+    //   .then((res) =>
+    //     this.setState((prevState) => ({
+    //       ...prevState,
+    //       books: prevState.books.filter((book) => book._id !== id),
+    //       noBooks: prevState.books.length === 1 ? true : false,
+    //       showSpinner: false,
+    //       carouselIndex: 0,
+    //       updateBook: prevState.books[0] || { title: "NA", description: "NA", status: "NA" }
+    //     }))
+    //   )
+    //   .catch((err) => {
+    //     this.setState({
+    //       showError: true,
+    //       errorMessage: err.message,
+    //       showSpinner: false,
+    //     });
+    //   });
+
 
   render() {
     // console.log(this.props.auth0.isAuthenticated);
