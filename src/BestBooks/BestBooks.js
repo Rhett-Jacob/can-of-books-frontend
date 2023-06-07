@@ -102,155 +102,164 @@ class BestBooks extends React.Component {
                 updateBook: resBook,
                 noBooks: false,
               }))
-            })})
-            .catch(err => {
-              this.setState({ showError: true, errorMessage: err.message });
             })
-
-            // axios
-            //   .post(url, newBook)
-            //   .then((res) => {
-            //     let resBook = res.data;
-            //     this.setState(prevState => ({
-            //       ...prevState,
-            //       books: [...prevState.books, resBook],
-            //       carouselIndex: prevState.books.length,
-            //       updateBook:resBook,
-            //       noBooks: false,
-            //     }))}
-            //   )
-            // .catch((err) => {
-            //   // console.error(err.message);
-            //   this.setState({ showError: true, errorMessage: err.message });
-            // });
-        } else {
-          this.setState({
-            showError: true,
-            errorMessage:
-              "All fields must be filled out. Please carefully fill out the form.",
-            showAddBook: false,
-          });
-        }
+        })
+        .catch(err => {
+          this.setState({ showError: true, errorMessage: err.message });
+        })
+    } else {
+      this.setState({
+        showError: true,
+        errorMessage:
+          "All fields must be filled out. Please carefully fill out the form.",
+        showAddBook: false,
+      });
+    }
   };
 
-    handlerUpdateBook = (e, id) => {
-      e.preventDefault();
-      // console.log(e.target);
-      let bookTitle = e.target.bookTitle.value;
-      let bookDescription = e.target.bookDescription.value;
-      let bookStatus = e.target.bookStatus.value;
+  handlerUpdateBook = (e, id) => {
+    e.preventDefault();
+    let bookTitle = e.target.bookTitle.value;
+    let bookDescription = e.target.bookDescription.value;
+    let bookStatus = e.target.bookStatus.value;
 
-      if (bookTitle && bookDescription && bookStatus) {
-        let updateBook = {
-          _id: id,
-          title: bookTitle,
-          description: bookDescription,
-          status: bookStatus,
-        };
+    if (bookTitle && bookDescription && bookStatus) {
+      let updateBook = {
+        _id: id,
+        title: bookTitle,
+        description: bookDescription,
+        status: bookStatus,
+      };
 
-        let url = `${SERVER}/books/${id}`;
-        // console.log(url,updateBook);
-        this.setState({ showUpdateBook: false });
+      // let url = `${SERVER}/books/${id}`;
+      this.setState({ showUpdateBook: false });
 
-        axios
-          .put(url, updateBook)
-          .then((res) => {
-            let updatedBook = res.data;
-            this.setState(prevState => ({
-              ...prevState,
-              books: prevState.books.map(book => book._id === id ? updatedBook : book),
-              noBooks: false,
-              updateBook: updatedBook
-            }));
-            // console.log(res);
-          }
-          )
-          .catch((err) => {
-            // console.error(err.message);
-            this.setState({ showError: true, errorMessage: err.message });
-          });
-      } else {
+      this.props.auth0.getIdTokenClaims()
+        .then(res => {
+          let jwt = res.__raw;
+          let config = {
+            headers: { 'Authorization': `Bearer ${jwt}` },
+            method: 'put',
+            data: updateBook,
+            baseURL: process.env.REACT_APP_SERVER,
+            url: `/books/${updateBook._id}`
+          } 
+          console.log(config);
+          axios(config)
+            .then((res) => {
+              let updatedBook = res.data;
+              console.log(updatedBook);
+              this.setState(prevState => ({
+                ...prevState,
+                books: prevState.books.map(book => book._id === id ? updatedBook : book),
+                noBooks: false,
+                updateBook: updatedBook
+              }));
+            }
+            ).catch((err) => {
+              this.setState({ showError: true, errorMessage: err.message });
+            });
+        })
+        .catch((err) => {
+          this.setState({ showError: true, errorMessage: err.message });
+        });
+      // axios
+      //   .put(url, updateBook)
+      //   .then((res) => {
+      //     let updatedBook = res.data;
+      //     this.setState(prevState => ({
+      //       ...prevState,
+      //       books: prevState.books.map(book => book._id === id ? updatedBook : book),
+      //       noBooks: false,
+      //       updateBook: updatedBook
+      //     }));
+      //   }
+      //   )
+      //   .catch((err) => {
+      //     this.setState({ showError: true, errorMessage: err.message });
+      //   });
+    } else {
+      this.setState({
+        showError: true,
+        errorMessage:
+          "All fields must be filled out. Please carefully fill out the form.",
+        showUpdateBook: false,
+      });
+    }
+  };
+
+  handlerDeleteBook = (id) => {
+    this.setState({ showSpinner: true });
+    let url = `${SERVER}/books/${id}`;
+    axios
+      .delete(url)
+      .then((res) =>
+        this.setState((prevState) => ({
+          ...prevState,
+          books: prevState.books.filter((book) => book._id !== id),
+          noBooks: prevState.books.length === 1 ? true : false,
+          showSpinner: false,
+          carouselIndex: 0,
+          updateBook: prevState.books[0] || { title: "NA", description: "NA", status: "NA" }
+        }))
+      )
+      .catch((err) => {
         this.setState({
           showError: true,
-          errorMessage:
-            "All fields must be filled out. Please carefully fill out the form.",
-          showUpdateBook: false,
+          errorMessage: err.message,
+          showSpinner: false,
         });
-      }
-    };
+      });
+  };
 
-    handlerDeleteBook = (id) => {
-      this.setState({ showSpinner: true });
-      let url = `${SERVER}/books/${id}`;
-      axios
-        .delete(url)
-        .then((res) =>
-          this.setState((prevState) => ({
-            ...prevState,
-            books: prevState.books.filter((book) => book._id !== id),
-            noBooks: prevState.books.length === 1 ? true : false,
-            showSpinner: false,
-            carouselIndex: 0,
-            updateBook: prevState.books[0] || { title: "NA", description: "NA", status: "NA" }
-          }))
-        )
-        .catch((err) => {
-          this.setState({
-            showError: true,
-            errorMessage: err.message,
-            showSpinner: false,
-          });
-        });
-    };
+  render() {
+    // console.log(this.props.auth0.isAuthenticated);
+    return (
+      <>
+        <AddBookModal
+          addBook={addBook}
+          showAddBook={this.state.showAddBook}
+          handlerShowAddBook={() => this.setState({ showAddBook: false })}
+          handlerAddBook={this.handlerAddBook}
+        />
 
-    render() {
-      // console.log(this.props.auth0.isAuthenticated);
-      return (
-        <>
-          <AddBookModal
-            addBook={addBook}
-            showAddBook={this.state.showAddBook}
-            handlerShowAddBook={() => this.setState({ showAddBook: false })}
-            handlerAddBook={this.handlerAddBook}
-          />
+        <UpdateBookModal
+          updateBook={this.state.updateBook}
+          showUpdateBook={this.state.showUpdateBook}
+          handlerShowUpdateBook={(bool) => this.setState({ showUpdateBook: bool })}
+          handlerUpdateBook={this.handlerUpdateBook}
+        />
 
-          <UpdateBookModal
-            updateBook={this.state.updateBook}
-            showUpdateBook={this.state.showUpdateBook}
-            handlerShowUpdateBook={(bool) => this.setState({ showUpdateBook: bool })}
-            handlerUpdateBook={this.handlerUpdateBook}
-          />
+        <ErrorModal
+          showError={this.state.showError}
+          errorMessage={this.state.errorMessage}
+          handlerClearError={() => this.setState({ showError: false, errorMessage: "" })}
+        />
 
-          <ErrorModal
-            showError={this.state.showError}
-            errorMessage={this.state.errorMessage}
-            handlerClearError={() => this.setState({ showError: false, errorMessage: "" })}
-          />
+        <HeaderButton
+          noBooks={this.state.noBooks}
+          showSpinner={this.state.showSpinner}
+          handlerShowAddBook={() => this.setState({ showAddBook: true })}
+          handlerDeleteBook={() => this.handlerDeleteBook(this.state.updateBook._id)}
+          handlerShowUpdateBook={() => this.setState({ showUpdateBook: true })}
+        />
 
-          <HeaderButton
+
+        {this.state.noBooks ?
+          <CarouselBooks
             noBooks={this.state.noBooks}
-            showSpinner={this.state.showSpinner}
-            handlerShowAddBook={() => this.setState({ showAddBook: true })}
-            handlerDeleteBook={() => this.handlerDeleteBook(this.state.updateBook._id)}
-            handlerShowUpdateBook={() => this.setState({ showUpdateBook: true })}
+            books={[{ title: "No Books in Collection" }]}
+          /> :
+          <CarouselBooks
+            noBooks={this.state.noBooks}
+            books={this.state.books}
+            carouselIndex={this.state.carouselIndex}
+            handlerCarouselIndex={this.handlerCarouselIndex}
           />
-
-
-          {this.state.noBooks ?
-            <CarouselBooks
-              noBooks={this.state.noBooks}
-              books={[{ title: "No Books in Collection" }]}
-            /> :
-            <CarouselBooks
-              noBooks={this.state.noBooks}
-              books={this.state.books}
-              carouselIndex={this.state.carouselIndex}
-              handlerCarouselIndex={this.handlerCarouselIndex}
-            />
-          }
-        </>
-      );
-    }
+        }
+      </>
+    );
   }
+}
 
 export default withAuth0(BestBooks);
