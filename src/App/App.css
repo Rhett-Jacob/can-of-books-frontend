@@ -6,6 +6,10 @@
   --sunset: #f2cc8fff;
 }
 
+body {
+  background-color:var(--delft-blue);
+}
+
 .app {
   background-color: var(--delft-blue);
 }
@@ -15,6 +19,7 @@
   justify-content: center;
   align-content:center;
   align-items:center;
+  margin-top:1em;
   /* align-items: space-between; */
   padding: 0.5rem;
   gap: 2rem;
@@ -100,6 +105,8 @@ span.footerText.navbar-brand {
 .carouselParent {
   border: 10px solid var(--sunset);
 }
+
+
 
 .carouselImage {
   object-fit: cover;

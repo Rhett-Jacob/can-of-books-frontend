@@ -19,16 +19,18 @@ class UserProfile extends React.Component {
             className="carouselParent"
             interval={null}
             >
-            <Carousel.Item>
+            <Carousel.Item 
+              className="carouselItem"
+              >
               <img
-                className="d-block w-100"
+                className="d-block w-100 carouselImage"
                 style={{ height: "500px", width:"500px" }}
                 src={this.props.auth0.user.picture||NoNameUserPicture}
                 alt={this.props.auth0.user.name||"imaged did not load"}
               />
               <Carousel.Caption
                 className="carouselCaption carouselAboutUs">
-                <h3 className="textAboutUs">{`User Name: ${this.props.auth0.user.name}`||"Username not received"}</h3>
+                <h3 className="textAboutUs">{`Username: ${this.props.auth0.user.name}`||"Username not received"}</h3>
                 <p className="textAboutUs">{`Email: ${this.props.auth0.user.email}`||""}</p>
               </Carousel.Caption>
             </Carousel.Item>

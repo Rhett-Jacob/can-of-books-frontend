@@ -20,14 +20,17 @@ class AboutUsProfile extends React.Component {
             >
             <Carousel.Item>
               <img
-                className="d-block w-100"
+                className="d-block w-100 carouselImage"
                 style={{ height: "500px", width:"500px" }}
                 src={rhettImage}
                 alt="rhett's profile pic"
               />
               <Carousel.Caption
                 className="carouselCaption carouselAboutUs">
-                <h3 className="textAboutUs">Rhett Beardemphl</h3>
+                <h3 
+                  className="textAboutUs"
+                  onClick={()=>window.location.href="https://github.com/rhettb253"}
+                  >Rhett Beardemphl</h3>
                 <p className="textAboutUs">Rhett was a LA creative who found a new home for his creativity in web and app development.</p>
               </Carousel.Caption>
             </Carousel.Item>
@@ -40,7 +43,10 @@ class AboutUsProfile extends React.Component {
               />
               <Carousel.Caption
                 className="carouselCaption carouselAboutUs">
-                <h3 className="textAboutUs">Jacob Bassett</h3>
+                <h3 
+                  className="textAboutUs"
+                  onClick={()=>window.location.href="https://github.com/jdabassett"}
+                  >Jacob Bassett </h3>
                 <p className="textAboutUs">Jacob was a molecular biologist turned code slinger who likes the taste of nucleotides with his glutamate.<a className="link" href="https://www.youtube.com/watch?v=GHX3aaLmjMI"> [link]</a></p>
               </Carousel.Caption>
             </Carousel.Item>

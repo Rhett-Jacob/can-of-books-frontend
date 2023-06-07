@@ -8,11 +8,11 @@ const LogoutButton = () => {
   const { logout } = useAuth0();
 
   return (
-    <Button 
+    <Button
       className="buttonDelete logButtons"
       variant="primary"
       onClick={() => logout({ logoutParams: { returnTo: process.env.REACT_APP_AUTH_REDIRECT_URI } })}>
-      Log Out
+      Log-Out
     </Button>
   );
 };

@@ -236,14 +236,6 @@ class BestBooks extends React.Component {
           handlerClearError={() => this.setState({ showError: false, errorMessage: "" })}
         />
 
-        <HeaderButton
-          noBooks={this.state.noBooks}
-          showSpinner={this.state.showSpinner}
-          handlerShowAddBook={() => this.setState({ showAddBook: true })}
-          handlerDeleteBook={() => this.handlerDeleteBook(this.state.updateBook._id)}
-          handlerShowUpdateBook={() => this.setState({ showUpdateBook: true })}
-        />
-
 
         {this.state.noBooks ?
           <CarouselBooks
@@ -257,6 +249,13 @@ class BestBooks extends React.Component {
             handlerCarouselIndex={this.handlerCarouselIndex}
           />
         }
+        <HeaderButton
+          noBooks={this.state.noBooks}
+          showSpinner={this.state.showSpinner}
+          handlerShowAddBook={() => this.setState({ showAddBook: true })}
+          handlerDeleteBook={() => this.handlerDeleteBook(this.state.updateBook._id)}
+          handlerShowUpdateBook={() => this.setState({ showUpdateBook: true })}
+        />
       </>
     );
   }
