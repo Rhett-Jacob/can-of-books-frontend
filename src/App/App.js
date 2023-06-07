@@ -10,6 +10,8 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import {withAuth0} from '@auth0/auth0-react';
+import CarouselBooks from "../BestBooks/CarouselBooks/CarouselBooks";
 
 class App extends React.Component {
   render() {
@@ -20,8 +22,11 @@ class App extends React.Component {
           <Routes>
             <Route 
               exact path="/"
-              element={<BestBooks />}
-            >
+              element={this.props.auth0.isAuthenticated? 
+                <BestBooks />: 
+                <CarouselBooks
+                  noBooks={true}
+                  books={[{ title: "Login to curate your book collection!" }]}/>}>
             </Route>
             <Route 
               exact path="/about"
@@ -36,4 +41,6 @@ class App extends React.Component {
   }
 }
 
-export default App;
+
+
+export default withAuth0(App);

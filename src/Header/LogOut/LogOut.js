@@ -9,9 +9,9 @@ const LogoutButton = () => {
 
   return (
     <Button 
-      className="buttonDelete marginLeft"
+      className="buttonDelete logButtons"
       variant="primary"
-      onClick={() => logout({ logoutParams: { returnTo: process.env.REACT_APP_AUTH_URI } })}>
+      onClick={() => logout({ logoutParams: { returnTo: process.env.REACT_APP_AUTH_REDIRECT_URI } })}>
       Log Out
     </Button>
   );

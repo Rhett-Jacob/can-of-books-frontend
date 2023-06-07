@@ -29,22 +29,36 @@ class BestBooks extends React.Component {
     };
   }
 
-  componentDidMount() {
-    axios
-      .get(`${SERVER}/books`)
-      .then((res) => {
-        const resBooks = res.data.data;
-        this.setState({ books: resBooks, updateBook:resBooks[0]||{title:"NA",description:"NA",status:"NA"}, carouselIndex:0, noBooks: false})})
-      .catch((err) => {
-        // console.error(err);
-        this.setState({
-          showError: true,
-          errorMessage: err.message,
-          noBooks: true,
-        });
-      });
-  }
 
+  componentDidMount() {
+
+      if (this.props.auth0.isAuthenticated){
+        this.props.auth0.getIdTokenClaims()
+          .then(res => {
+            console.log('getIdTokenRan');
+            const jwt = res.__raw;
+            const config = {
+              headers:{"Authorization": `Bearer ${jwt}`},
+              method: 'get',
+              baseURL: process.env.REACT_APP_SERVER,
+              url: '/books'}
+
+            axios(config)
+              .then((res) => {
+                const resBooks = res.data.data;
+                this.setState({ books: resBooks, updateBook:resBooks[0]||{title:"NA",description:"NA",status:"NA"}, carouselIndex:0, noBooks: false})})
+              .catch((err) => {
+                this.setState({
+                  showError: true,
+                  errorMessage: err.message,
+                  noBooks: true,
+                });
+              });
+
+          })
+          .catch(err => console.log(err));
+        }
+  }
 
   handlerCarouselIndex = (idx) => {
     this.setState(prevState => ({
@@ -168,7 +182,7 @@ class BestBooks extends React.Component {
   };
 
   render() {
-    // console.log(this.state.updateBook);
+    // console.log(this.props.auth0.isAuthenticated);
     return (
       <>
         <AddBookModal
@@ -191,35 +205,26 @@ class BestBooks extends React.Component {
           handlerClearError={() =>this.setState({ showError: false, errorMessage: "" })}
         />
 
-        {false?
-          <HeaderButton
-            noBooks={this.state.noBooks}
-            showSpinner={this.state.showSpinner}
-            handlerShowAddBook={() => this.setState({ showAddBook: true })}
-            handlerDeleteBook={()=>this.handlerDeleteBook(this.state.updateBook._id)}
-            handlerShowUpdateBook={()=>this.setState({showUpdateBook:true})}
-          />:
-          null
-          }
+        <HeaderButton
+          noBooks={this.state.noBooks}
+          showSpinner={this.state.showSpinner}
+          handlerShowAddBook={() => this.setState({ showAddBook: true })}
+          handlerDeleteBook={()=>this.handlerDeleteBook(this.state.updateBook._id)}
+          handlerShowUpdateBook={()=>this.setState({showUpdateBook:true})}
+        />
 
 
-        {false ?
-          this.state.noBooks ? (
+        {this.state.noBooks ? 
             <CarouselBooks
               noBooks={this.state.noBooks}
               books={[{ title: "No Books in Collection" }]}
-            />
-          ) : (
+            />: 
             <CarouselBooks
               noBooks={this.state.noBooks}
               books={this.state.books}
               carouselIndex={this.state.carouselIndex}
               handlerCarouselIndex={this.handlerCarouselIndex}
             />
-          ):
-          <CarouselBooks
-            noBooks={true}
-            books={[{ title: "Login to curate your book collection!" }]}/>
         }
       </>
     );
