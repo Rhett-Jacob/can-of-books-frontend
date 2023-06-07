@@ -8,7 +8,6 @@ import CarouselBooks from "./CarouselBooks/CarouselBooks";
 import "./BestBooks.css";
 import { withAuth0 } from '@auth0/auth0-react';
 
-let SERVER = process.env.REACT_APP_SERVER;
 
 // cite description from wikipedia (https://en.wikipedia.org/wiki/Harry_Potter_and_the_Philosopher%27s_Stone_(film))
 const addBook = { title: "Harry Potter and the Sorcerer's Stone", description: "A boy who learns on his eleventh birthday that he is the orphaned son of two powerful wizards and possesses unique magical powers of his own. He is summoned from his life as an unwanted child to become a student at Hogwarts, an English boarding school for wizards. There, he meets several friends who become his closest allies and help him discover the truth about his parents' mysterious deaths.", status: "true" };
@@ -79,7 +78,6 @@ class BestBooks extends React.Component {
         description: bookDescription,
         status: bookStatus,
       };
-      // let url = `${SERVER}/books`;
       this.setState({ showAddBook: false });
 
       this.props.auth0.getIdTokenClaims()
@@ -134,7 +132,6 @@ class BestBooks extends React.Component {
         status: bookStatus,
       };
 
-      // let url = `${SERVER}/books/${id}`;
       this.setState({ showUpdateBook: false });
 
       this.props.auth0.getIdTokenClaims()
@@ -216,30 +213,7 @@ class BestBooks extends React.Component {
     
 
 
-
-    // axios
-    //   .delete(url)
-    //   .then((res) =>
-    //     this.setState((prevState) => ({
-    //       ...prevState,
-    //       books: prevState.books.filter((book) => book._id !== id),
-    //       noBooks: prevState.books.length === 1 ? true : false,
-    //       showSpinner: false,
-    //       carouselIndex: 0,
-    //       updateBook: prevState.books[0] || { title: "NA", description: "NA", status: "NA" }
-    //     }))
-    //   )
-    //   .catch((err) => {
-    //     this.setState({
-    //       showError: true,
-    //       errorMessage: err.message,
-    //       showSpinner: false,
-    //     });
-    //   });
-
-
   render() {
-    // console.log(this.props.auth0.isAuthenticated);
     return (
       <>
         <AddBookModal
