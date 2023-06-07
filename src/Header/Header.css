@@ -10,3 +10,14 @@
 .nav-link:hover{
     color: rgb(102, 98, 98)!important; 
 }
+
+.nav-container {
+    /* outline:5px solid var(--sunset); */
+    width:100%;
+    display:flex;
+    flex-direction:row;
+    flex-wrap:nowrap;
+    justify-content:space-between;
+    align-items:center;
+    padding:1em;
+}

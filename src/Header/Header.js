@@ -21,13 +21,14 @@ class Header extends React.Component {
                   <Navbar.Brand></Navbar.Brand>
                   <Navbar.Toggle aria-controls="basic-navbar-nav" />
                   <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
+                    <Nav 
+                      className="me-auto nav-container">
                       <NavItem><Link to="/" className="nav-link">Bookshelf</Link></NavItem>
                       <NavItem><Link to="/user" className="nav-link">User-Profile</Link></NavItem>
                       <NavItem><Link to="/about" className="nav-link">About-Us</Link></NavItem>
 
                       {this.props.auth0.isAuthenticated?
-                        <NavItem><LogOut /></NavItem>:
+                        <NavItem><LogOut/></NavItem>:
                         <NavItem><Login/></NavItem>}
            
                     </Nav>

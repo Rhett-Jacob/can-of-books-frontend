@@ -9,6 +9,7 @@ https://stackoverflow.com/questions/27279865/how-to-vertically-center-a-bootstra
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
+    background-color:var(--sunset);
 }
 
 .carouselImage {
