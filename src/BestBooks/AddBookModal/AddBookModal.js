@@ -54,7 +54,7 @@ class AddBookModal extends React.Component {
                             <Button
                                 className="buttonDelete buttonModal"
                                 variant="secondary"
-                                onClick={this.props.handlerAddBook}>
+                                onClick={this.props.handlerShowAddBook}>
                                 Close Form
                             </Button>
                         </div>
