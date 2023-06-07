@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-class Profile extends React.Component {
+class AboutUsProfile extends React.Component {
   render() {
     return (
     <Container className="carouselContainer">
@@ -52,4 +52,4 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+export default AboutUsProfile;
